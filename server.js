@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
+const path = require('path');
 
 // Here we use destructuring assignment with renaming so the two variables
 // called router (from ./users and ./auth) have different names
@@ -20,6 +21,9 @@ mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
 
 const app = express();
+
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Logging
 app.use(morgan('common'));
