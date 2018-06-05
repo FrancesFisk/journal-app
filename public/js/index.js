@@ -29,7 +29,7 @@ function userLogin() {
     const passwordField = $(event.currentTarget).find('.existing-password');
     const newPassword = passwordField.val();
     console.log(newUsername, newPassword);
-    postUserRegistration(newUsername, newPassword);
+    postLogin(newUsername, newPassword);
 }
 
   // ajax post calls
@@ -47,13 +47,13 @@ function postUserRegistration(user, pw) {
         console.log(data)
     },
     error: function(err) {
-        console.log(err);
+        console.log(err.responseText);
     },
     dataType: "json"
   })
 }
 
-function postLogin() {
+function postLogin(user, pw) {
 // endpoint for login /api/auth/login
   $.ajax({
     // url, method, data, success, error
@@ -65,9 +65,10 @@ function postLogin() {
     },
     success: function(data) {
         console.log(data)
+        sessionStorage.setItem('authToken', data.authToken);
     },
     error: function(err) {
-        console.log(err);
+        console.log(err.responseText);
     },
     dataType: "json"
   })
