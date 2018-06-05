@@ -10,6 +10,23 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
+
+router.get('/', (req, res) => {
+  MakeupLook
+    .find()
+    // documents, and that's too much to process/return
+    .then(makeupLooks => {
+      res.json({
+        makeupLooks: makeupLooks.map(
+          (makeupLooks) => makeupLooks.serialize())
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 // For testing
 router.post('/create', (req, res) => {
   let object = {
@@ -45,10 +62,10 @@ router.delete('/:id', (req, res) => {
   MakeupLook
     .findByIdAndRemove(req.params.id)
     .then(() => {
-      res.status(204).json({message: "Delete was successful"})
+      res.status(204).json({message: "Delete was successful"});
     })
     .catch(err => {
-      res.status(500).json({message: "ID not found"});
+      res.status(500).json({message: "Internal server error"});
     }
   )
 })
