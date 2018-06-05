@@ -18,8 +18,16 @@ const makeupLookSchema = mongoose.Schema({
 
 makeupLookSchema.methods.serialize = function() {
   return {
-    id: this
-  }
+    id: this._id,
+    image: this.image,
+    title: this.title,
+    username: this.username,
+    steps: this.steps,
+    products: this.products,
+    skintype: this.skintype,
+    colortheme: this.colortheme,
+    publish: this.publish
+  };
 }
 
 const MakeupLook = mongoose.model('MakeupLook', makeupLookSchema);
