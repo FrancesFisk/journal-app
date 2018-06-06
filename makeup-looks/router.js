@@ -28,26 +28,26 @@ router.get('/', (req, res) => {
 });
 
 // For testing
-router.post('/create', (req, res) => {
-  let object = {
-    image: req.body.image,
-    title: req.body.title,
-    username: req.body.username,
-    steps: req.body.steps,
-    products: req.body.products,
-    skintype: req.body.skintype,
-    colortheme: req.body.colortheme
-  };
-// router.post('/create', jwtAuth, (req, res) => {
-//     let object = {
-//       image: req.body.image,
-//       title: req.body.title,
-//       username: req.user.username,
-//       steps: req.body.steps,
-//       products: req.body.products,
-//       skintype: req.body.skintype,
-//       colortheme: req.body.colortheme
-//     };
+// router.post('/create', (req, res) => {
+//   let object = {
+//     image: req.body.image,
+//     title: req.body.title,
+//     username: req.body.username,
+//     steps: req.body.steps,
+//     products: req.body.products,
+//     skintype: req.body.skintype,
+//     colortheme: req.body.colortheme
+//   };
+router.post('/create', jwtAuth, (req, res) => {
+    let object = {
+      image: req.body.image,
+      title: req.body.title,
+      username: req.user.username,
+      steps: req.body.steps,
+      products: req.body.products,
+      skintype: req.body.skintype,
+      colortheme: req.body.colortheme
+    };
     return MakeupLook  
       .create(object)
       .then(newLook => {

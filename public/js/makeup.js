@@ -1,6 +1,6 @@
 $(function() {
 
-var data = sessionStorage.getItem('authToken');
+let data = sessionStorage.getItem('authToken');
 let badData = "234234432";
 
 console.log("makeup.js ", data);

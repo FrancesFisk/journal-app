@@ -12,6 +12,12 @@ $('.login-form').on('submit', event => {
   userLogin();
 });
 
+$('.logout-btn').click(event => {
+  event.preventDefault();
+  console.log("logout button working");
+  logOut();
+});
+
 function userRegistration() {
     // const usernameField = $(event.currentTarget).find('.new-username');
     const newUsername = $('.new-username').val();
@@ -65,5 +71,17 @@ function postLogin(user, pw) {
   })
 }
 
+function logOut() {
+  $.ajax({
+    url: "/api/logout",
+    method: "GET",
+    success: function(data) {
+      console.log("logging out");
+    },
+    error: function(err) {
+      console.log(err.responseText);
+    }
+  });
+}
 
 });

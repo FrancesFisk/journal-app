@@ -56,6 +56,12 @@ app.get('/api/protected', jwtAuth, (req, res) => {
   });
 });
 
+app.get('/api/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+  console.log("logged out");
+});
+
 app.use('*', (req, res) => {
   return res.status(404).json({ message: 'Not Found' });
 });
