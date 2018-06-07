@@ -40,8 +40,7 @@ function displayMakeupLooks(data) {
     returnHTML += 
       `<div class="thumbnail"> 
         <img src="${item.image}" class="thumbnail-img"> 
-        <div>${item.title}</div> 
-        <div>for skin type: ${item.skintype}</div> 
+        <div>${item.title}</div>
       </div>`;
     looks[item.title] = item;
   })
@@ -50,9 +49,31 @@ function displayMakeupLooks(data) {
 
 $('body').on('click', '.thumbnail', function(e) {
   console.log("thumbnail clicked");
-  $('.modal').show();
+  openModal(this);
 })
 
+function openModal(clickedElement) {
+  let thisText = $(clickedElement).text();
+  console.log("openModal text", thisText);
+  getDataFromApi(thisText, loadMakeupData);
+}
+
+function getDataFromApi(searchTerm, callback) {
+  console.log("getDataFromApi", searchTerm);
+  // Get data about the makeup Look based on the title
+}
+
+function loadMakeupData() {
+  console.log("loadMakeupData");
+  // add info about makeup look you want displayed in the modal
+  // add function displayModal() to display the modal with the given info
+}
+
+function displayModal() {
+  // display the modal with the given info from loadMakeupData
+}
+
+// Close modal
 $('.modal').on('click', '.close', function(e) {
   console.log("modal close clicked");
   $('.modal').hide();
