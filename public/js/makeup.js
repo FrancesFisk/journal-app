@@ -4,6 +4,9 @@ let data = sessionStorage.getItem('authToken'),
   badData = "234234432",
   looks;
 
+// Ajax calls
+
+// authorize with Token
 console.log("makeup.js ", data);
 $.ajax({
     url: "/api/protected",
@@ -18,6 +21,7 @@ $.ajax({
     }
 })
 
+// Get library of looks
 $.ajax({
   url: "/api/makeuplooks",
   method: "GET",
@@ -30,6 +34,22 @@ $.ajax({
     window.location = "index.html"
   }
 })
+
+// Event handlers
+
+$('body').on('click', '.thumbnail', function(e) {
+  console.log("thumbnail clicked");
+  // $('.modal').show();
+  openModal(this);
+})
+
+// Close modal
+$('.modal').on('click', '.close', function(e) {
+  console.log("modal close clicked");
+  $('.modal').hide();
+})
+
+// Functions
 
 function displayMakeupLooks(data) {
   let returnHTML = "";
@@ -46,11 +66,6 @@ function displayMakeupLooks(data) {
   })
   $('.public-looks').html(returnHTML);
 }
-
-$('body').on('click', '.thumbnail', function(e) {
-  console.log("thumbnail clicked");
-  openModal(this);
-})
 
 function openModal(clickedElement) {
   let thisText = $(clickedElement).text();
@@ -72,11 +87,5 @@ function loadMakeupData() {
 function displayModal() {
   // display the modal with the given info from loadMakeupData
 }
-
-// Close modal
-$('.modal').on('click', '.close', function(e) {
-  console.log("modal close clicked");
-  $('.modal').hide();
-})
 
 });
