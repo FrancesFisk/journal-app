@@ -40,7 +40,6 @@ router.get('/', (req, res) => {
 //   };
 router.post('/create', jwtAuth, (req, res) => {
     let object = {
-      image: req.body.image,
       title: req.body.title,
       username: req.user.username,
       steps: req.body.steps,
@@ -56,6 +55,7 @@ router.post('/create', jwtAuth, (req, res) => {
       .catch(error => {
         res.send(sendError);
       })
+    console.log(req.body);
 })
 
 router.delete('/:id', (req, res) => {

@@ -12,7 +12,31 @@
   <nav></nav>
   <main>Makeup app
     <section class="create-look">
-
+      <form id="create-look-form" enctype="multipart/form-data">
+          <!-- <input type="file" name="image"/> <br/> -->
+          <input type="text" name="title" required/><br/>
+          <input type="text" name="username"/><br/>
+          <div class="steps">
+          <input type="text" name="step_1"/><br/>
+            <a class="small italic add-step">Add new step</a>
+            </div>
+          <div class="products">
+            <input type="text" name="product_1"/><br/>
+            <a class="small italic add-product">Add new product</a>
+          </div>
+          <select id="select-skintype">
+            <option>Select skintype</option>
+            <option>oily</option>
+            <option>dry</option>
+            <option>combination</option>
+            <option>normal</option>
+          </select><br/>
+          <div class="colortheme">
+              <input type="text" name="color_1"/><br/>
+              <a class="small italic add-colortheme">Add new color theme</a>
+          </div>
+          <button type="submit" class="submit-look-btn">Submit</button>
+      </form>
     </section>
     <section class="public-looks">
     </section>
