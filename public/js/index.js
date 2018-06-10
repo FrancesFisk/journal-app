@@ -12,12 +12,6 @@ $('.login-form').on('submit', event => {
   userLogin();
 });
 
-$('.logout-btn').click(event => {
-  event.preventDefault();
-  console.log("logout button working");
-  logOut();
-});
-
 function userRegistration() {
     // const usernameField = $(event.currentTarget).find('.new-username');
     const newUsername = $('.new-username').val();

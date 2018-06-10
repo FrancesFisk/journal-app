@@ -1,4 +1,27 @@
 
+input {
+  height: 20px;
+  width: 300px;
+  margin: 5px 0;
+}
+
+.add-link {
+  background: lightgray;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+#select-skintype {
+  margin: 5px 0;
+  height: 20px;
+}
+
+.submit-look-btn {
+  margin: 5px 0;
+  height: 20px;
+}
+
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */

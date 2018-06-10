@@ -1,5 +1,6 @@
 $(function() {
 
+
 $('.modal-content').on('click', '.delete-btn', function(e) {
   console.log("delete button clicked");
 })
@@ -8,33 +9,61 @@ $('.modal-content').on('click', '.edit-btn', function(e) {
   console.log("edit button clicked");
 })
 
+// 
+$('.create-look').on('click', '.delete-field', function(e) {
+  console.log("delete field button clicked");
+  $(this).parent().remove();
+})
+
 let files; 
 $('input[type=file]').on('change', prepareUpload); 
 function prepareUpload (event) { files = event.target.files; }
 
+
 $('#create-look-form').submit(e => {
   e.preventDefault();
-  // put 
-  // let data = new FormData(); 
-  // // $.each(files, function(key, value) { data.append(key, value); });
-  // // "title" is the name
-  // data.append("title", $('input[name=title]').val());
-  let data = {title: $('input[name=title]').val()}
+
+  let stepArray = [];
+
+  for(let i = 1; i <= steps; i++) {
+    let inputField = $(`input[name=step_${i}]`);
+    // if it exists on the page
+    if (inputField.length) {
+      stepArray.push(inputField.val());
+    }
+  
+}
+
+stepArray = stepArray.filter(Boolean);
+
+  let data = new FormData(); 
+  $.each(files, function(key, value) { data.append(key, value); });
+  // "title" is the name
+  data.append("title", $('input[name=title]').val());
+  data.append("steps", stepArray);
+  data.append("products", stepArray);
+  data.append("skintype", $('#select-skintype').val());
+  data.append("colortheme", stepArray);
+
+  
 console.log(data);
   $.ajax({
     url: '/api/makeuplooks/create',
     type: "POST",
     data: data,
+    cache: false, 
+    dataType: 'json', 
+    processData: false, 
+    contentType: false,
     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
     success: function(data) {
       console.log(data);
     },
     error: function(err) {
-      console.log(error.responseText);
+      console.log(err.responseText);
     }
   });
 });
-
 
 
 // create new look form
@@ -43,33 +72,36 @@ $('.add-step').click(e => {
   e.preventDefault();
   steps++;
   let newHTML = `
-    <input type="text" name="step_${steps}" required/>
+    <div><input type="text" name="step_${steps}" class="step" />
+    <button class="delete-field">&times;</button></div>
   `;
   let tempStep = steps -1;
-  $(`input[name=step_${tempStep}]`).after(newHTML);
-})
+  $(`input[name=step_${tempStep}]`).parent().after(newHTML);
+});
 
 let products = 1;
 $('.add-product').click(e => {
   e.preventDefault();
   products++;
   let newHTML = `
-    <input type="text" name="product_${products}" required/>
+    <div><input type="text" name="product_${products}"/>
+    <button class="delete-field">&times;</button></div>
   `;
   let tempProduct = products -1;
-  $(`input[name=product_${tempProduct}]`).after(newHTML);
-})
+  $(`input[name=product_${tempProduct}]`).parent().after(newHTML);
+});
 
 let colortheme = 1;
 $('.add-colortheme').click(e => {
   e.preventDefault();
   colortheme++;
   let newHTML = `
-    <input type="text" name="color_${colortheme}" required/>
+    <br/><input type="text" name="colortheme_${colortheme}"/>
+    <span class="delete-field">&times;</span>
   `;
   let tempColortheme = colortheme -1;
-  $(`input[name=color_${tempColortheme}]`).after(newHTML);
+  $(`input[name=colortheme_${tempColortheme}]`).after(newHTML);
 
-})
+});
 
 });
