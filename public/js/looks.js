@@ -9,7 +9,7 @@ $('.modal-content').on('click', '.edit-btn', function(e) {
   console.log("edit button clicked");
 })
 
-// 
+// Delete field
 $('.create-look').on('click', '.delete-field', function(e) {
   console.log("delete field button clicked");
   $(this).parent().remove();
@@ -23,27 +23,51 @@ function prepareUpload (event) { files = event.target.files; }
 $('#create-look-form').submit(e => {
   e.preventDefault();
 
-  let stepArray = [];
+  let stepsArray = [];
+  let productsArray = [];
+  let colorthemesArray =[];
+  let skinType = $('#select-skintype').val();
 
   for(let i = 1; i <= steps; i++) {
     let inputField = $(`input[name=step_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      stepArray.push(inputField.val());
+      stepsArray.push(inputField.val());
     }
-  
-}
+  }
 
-stepArray = stepArray.filter(Boolean);
+  for(let i = 1; i <= products; i++) {
+    let inputField = $(`input[name=product_${i}]`);
+    // if it exists on the page
+    if (inputField.length) {
+      productsArray.push(inputField.val());
+    }
+  }
+
+  for(let i = 1; i <= colorthemes; i++) {
+    let inputField = $(`input[name=colortheme_${i}]`);
+    // if it exists on the page
+    if (inputField.length) {
+      colorthemesArray.push(inputField.val());
+    }
+  }
+
+  if($('#select-skintype').val() === "Select skintype") {
+    skinType = "N/A";
+  }
+
+  stepsArray = stepsArray.filter(Boolean);
+  productsArray = productsArray.filter(Boolean);
+  colorthemesArray = colorthemesArray.filter(Boolean);
 
   let data = new FormData(); 
   $.each(files, function(key, value) { data.append(key, value); });
-  // "title" is the name
+  // first argument is the name
   data.append("title", $('input[name=title]').val());
-  data.append("steps", stepArray);
-  data.append("products", stepArray);
-  data.append("skintype", $('#select-skintype').val());
-  data.append("colortheme", stepArray);
+  data.append("steps", stepsArray);
+  data.append("products", productsArray);
+  data.append("skintype", skinType);
+  data.append("colortheme", colorthemesArray);
 
   
 console.log(data);
@@ -84,22 +108,22 @@ $('.add-product').click(e => {
   e.preventDefault();
   products++;
   let newHTML = `
-    <div><input type="text" name="product_${products}"/>
+    <div><input type="text" name="product_${products}" class="products/>
     <button class="delete-field">&times;</button></div>
   `;
   let tempProduct = products -1;
   $(`input[name=product_${tempProduct}]`).parent().after(newHTML);
 });
 
-let colortheme = 1;
+let colorthemes = 1;
 $('.add-colortheme').click(e => {
   e.preventDefault();
-  colortheme++;
+  colorthemes++;
   let newHTML = `
-    <br/><input type="text" name="colortheme_${colortheme}"/>
+    <br/><input type="text" name="colortheme_${colorthemes}" class="colorthemes"/>
     <span class="delete-field">&times;</span>
   `;
-  let tempColortheme = colortheme -1;
+  let tempColortheme = colorthemes -1;
   $(`input[name=colortheme_${tempColortheme}]`).after(newHTML);
 
 });
