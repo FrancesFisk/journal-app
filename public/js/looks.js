@@ -11,9 +11,10 @@ $('.modal-content').on('click', '.edit-btn', function(e) {
 
 // Delete field
 $('.create-look').on('click', '.delete-field', function(e) {
-  console.log("delete field button clicked");
-  $(this).parent().remove();
-})
+    $(this).prev().remove();
+    $(this).remove();
+  })
+
 
 let files; 
 $('input[type=file]').on('change', prepareUpload); 
@@ -69,6 +70,7 @@ $('#create-look-form').submit(e => {
   data.append("skintype", skinType);
   data.append("colortheme", colorthemesArray);
 
+  console.log("files", files);
   
 console.log(data);
   $.ajax({
@@ -91,16 +93,53 @@ console.log(data);
 
 
 // create new look form
+// let steps = 1;
+// $('.add-step').click(e => {
+//   e.preventDefault();
+//   steps++;
+//   let newHTML = `
+//     <div><input type="text" name="step_${steps}" class="steps" />
+//     <button class="delete-field">&times;</button></div>
+//   `;
+//   let tempStep = steps -1;
+//   $(`input[name=step_${tempStep}]`).parent().after(newHTML);
+//   console.log("new html", newHTML);
+// });
+
+// let products = 1;
+// $('.add-product').click(e => {
+//   e.preventDefault();
+//   products++;
+//   let newHTML = `
+//     <div><input type="text" name="product_${steps}" class="products" />
+//     <button class="delete-field">&times;</button></div>
+//   `;
+//   let tempProduct = products -1;
+//   $(`input[name=product_${tempProduct}]`).parent().after(newHTML);
+// });
+
+// let colorthemes = 1;
+// $('.add-colortheme').click(e => {
+//   e.preventDefault();
+//   colorthemes++;
+//   let newHTML = `
+//     <div><input type="text" name="colortheme_${steps}" class="colorthemes" />
+//     <button class="delete-field">&times;</button></div>
+//   `;
+//   let tempColortheme = colorthemes -1;
+//   $(`input[name=colortheme_${tempColortheme}]`).after(newHTML);
+
+// });
+
 let steps = 1;
 $('.add-step').click(e => {
   e.preventDefault();
   steps++;
   let newHTML = `
-    <div><input type="text" name="step_${steps}" class="step" />
+    <div><input type="text" name="step_${steps}" class="steps multiple-fields-option" />
     <button class="delete-field">&times;</button></div>
   `;
-  let tempStep = steps -1;
-  $(`input[name=step_${tempStep}]`).parent().after(newHTML);
+  $('.steps').append(newHTML);
 });
 
 let products = 1;
@@ -108,11 +147,10 @@ $('.add-product').click(e => {
   e.preventDefault();
   products++;
   let newHTML = `
-    <div><input type="text" name="product_${products}" class="products/>
+    <div><input type="text" name="product_${products}" class="products multiple-fields-option" />
     <button class="delete-field">&times;</button></div>
   `;
-  let tempProduct = products -1;
-  $(`input[name=product_${tempProduct}]`).parent().after(newHTML);
+  $('.products').append(newHTML);
 });
 
 let colorthemes = 1;
@@ -120,12 +158,12 @@ $('.add-colortheme').click(e => {
   e.preventDefault();
   colorthemes++;
   let newHTML = `
-    <br/><input type="text" name="colortheme_${colorthemes}" class="colorthemes"/>
-    <span class="delete-field">&times;</span>
+    <div><input type="text" name="colortheme_${colorthemes}" class="colorthemes multiple-fields-option" />
+    <button class="delete-field">&times;</button></div>
   `;
-  let tempColortheme = colorthemes -1;
-  $(`input[name=colortheme_${tempColortheme}]`).after(newHTML);
-
+  $('.colorthemes').append(newHTML);
 });
+
+
 
 });

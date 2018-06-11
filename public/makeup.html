@@ -18,14 +18,14 @@
           <input type="text" name="title" required/><br/>
           <label for="steps">Instructions</label>
           <div class="steps">
-          <input type="text" name="step_1" class="step"/><br/>
+            <input type="text" name="step_1" class="step"/><br/>
+          </div>
           <button class="small italic add-step">Add another step</button>
-          </div>
-          <label for="products">Products</label><br/>
           <div class="products">
+            <label for="products">Products</label><br/>
             <input type="text" name="product_1"/>
-            <button class="small italic add-product">Add another product</button>
           </div>
+          <button class="small italic add-product">Add another product</button>
           <select id="select-skintype">
             <option>Select skintype</option>
             <option>oily</option>
@@ -33,11 +33,12 @@
             <option>combination</option>
             <option>normal</option>
           </select><br/>
-          <label for="colortheme">Color Theme</label><br/>
-          <div class="colortheme">
-              <input type="text" name="colortheme_1"/><br/>
-              <button class="small italic add-colortheme">Add another color theme</button>
+          
+          <div class="colorthemes">
+            <label for="colorthemes">Color Theme</label><br/>
+            <input type="text" name="colortheme_1"/><br/>
           </div>
+          <button class="small italic add-colortheme">Add another color theme</button>
           <button type="submit" class="submit-look-btn">Submit</button>
       </form>
     </section>

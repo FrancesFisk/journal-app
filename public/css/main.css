@@ -11,12 +11,18 @@ input {
   border-radius: 5px;
 }
 
+.delete-field {
+  display: inline;
+}
+
 #select-skintype {
+  display: block;
   margin: 5px 0;
   height: 20px;
 }
 
 .submit-look-btn {
+  display: block;
   margin: 5px 0;
   height: 20px;
 }
