@@ -27,6 +27,9 @@ input {
   height: 20px;
 }
 
+.thumbnail-img {
+  height: 200px;
+}
 
 .modal {
   display: none; /* Hidden by default */
