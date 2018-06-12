@@ -1,26 +1,16 @@
 $(function() {
 
-
-$('.modal-content').on('click', '.delete-btn', function(e) {
-  console.log("delete button clicked");
-})
-
-$('.modal-content').on('click', '.edit-btn', function(e) {
-  console.log("edit button clicked");
-})
-
-// Delete field
-$('.create-look').on('click', '.delete-field', function(e) {
-    $(this).prev().remove();
-    $(this).remove();
-  })
-
-
 let files; 
+let steps = 1;
+let products = 1;
+let colorthemes = 1;
+
+// Handle image files
+
 $('input[type=file]').on('change', prepareUpload); 
 function prepareUpload (event) { files = event.target.files; }
 
-
+// Submit handler for creating a look form
 $('#create-look-form').submit(e => {
   e.preventDefault();
 
@@ -36,7 +26,6 @@ $('#create-look-form').submit(e => {
       stepsArray.push(inputField.val());
     }
   }
-
 
   for(let i = 1; i <= products; i++) {
     let inputField = $(`input[name=product_${i}]`);
@@ -54,14 +43,17 @@ $('#create-look-form').submit(e => {
     }
   }
 
+  // If user doesn't select a skintype
   if($('#select-skintype').val() === "Select skintype") {
     skinType = "N/A";
   }
 
+  // Remove falsy values from arrays
   stepsArray = stepsArray.filter(Boolean);
   productsArray = productsArray.filter(Boolean);
   colorthemesArray = colorthemesArray.filter(Boolean);
 
+  // Compile key/value pairs to send form data
   let data = new FormData(); 
   $.each(files, function(key, value) { data.append(key, value); });
   // first argument is the name
@@ -70,10 +62,8 @@ $('#create-look-form').submit(e => {
   data.append("products", productsArray);
   data.append("skintype", skinType);
   data.append("colortheme", colorthemesArray);
-
-  console.log("files", files);
   
-console.log(data);
+  // API request
   $.ajax({
     url: '/api/makeuplooks/create',
     type: "POST",
@@ -92,47 +82,7 @@ console.log(data);
   });
 });
 
-
-// create new look form
-// let steps = 1;
-// $('.add-step').click(e => {
-//   e.preventDefault();
-//   steps++;
-//   let newHTML = `
-//     <div><input type="text" name="step_${steps}" class="steps" />
-//     <button class="delete-field">&times;</button></div>
-//   `;
-//   let tempStep = steps -1;
-//   $(`input[name=step_${tempStep}]`).parent().after(newHTML);
-//   console.log("new html", newHTML);
-// });
-
-// let products = 1;
-// $('.add-product').click(e => {
-//   e.preventDefault();
-//   products++;
-//   let newHTML = `
-//     <div><input type="text" name="product_${steps}" class="products" />
-//     <button class="delete-field">&times;</button></div>
-//   `;
-//   let tempProduct = products -1;
-//   $(`input[name=product_${tempProduct}]`).parent().after(newHTML);
-// });
-
-// let colorthemes = 1;
-// $('.add-colortheme').click(e => {
-//   e.preventDefault();
-//   colorthemes++;
-//   let newHTML = `
-//     <div><input type="text" name="colortheme_${steps}" class="colorthemes" />
-//     <button class="delete-field">&times;</button></div>
-//   `;
-//   let tempColortheme = colorthemes -1;
-//   $(`input[name=colortheme_${tempColortheme}]`).after(newHTML);
-
-// });
-
-let steps = 1;
+// Add fields in the create look form
 $('.add-step').click(e => {
   e.preventDefault();
   steps++;
@@ -143,7 +93,6 @@ $('.add-step').click(e => {
   $('.steps').append(newHTML);
 });
 
-let products = 1;
 $('.add-product').click(e => {
   e.preventDefault();
   products++;
@@ -154,7 +103,6 @@ $('.add-product').click(e => {
   $('.products').append(newHTML);
 });
 
-let colorthemes = 1;
 $('.add-colortheme').click(e => {
   e.preventDefault();
   colorthemes++;
@@ -165,6 +113,11 @@ $('.add-colortheme').click(e => {
   $('.colorthemes').append(newHTML);
 });
 
+// Delete field in the create look form
+$('.create-look').on('click', '.delete-field', function(e) {
+  $(this).prev().remove();
+  $(this).remove();
+})
 
 
 });
