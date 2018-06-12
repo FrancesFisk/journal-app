@@ -37,6 +37,7 @@ $('#create-look-form').submit(e => {
     }
   }
 
+
   for(let i = 1; i <= products; i++) {
     let inputField = $(`input[name=product_${i}]`);
     // if it exists on the page

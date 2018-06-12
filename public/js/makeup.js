@@ -39,8 +39,9 @@ $.ajax({
 
 $('body').on('click', '.thumbnail', function(e) {
   console.log("thumbnail clicked");
-  // $('.modal').show();
-  openModal(this);
+  let id = $(this).attr("data-ref");
+  let clickedLook = looks[id];
+  openModal(clickedLook);
 })
 
 // Close modal
@@ -56,27 +57,57 @@ function displayMakeupLooks(data) {
   looks = {};
   let results = data.makeupLooks;
   results.forEach(function(item) {
-    console.log(item.title);
+    console.log("item", item);
     returnHTML += 
-      `<div class="thumbnail"> 
+      `<div class="thumbnail" data-ref="${item.id}"> 
         <img src="${item.image}" class="thumbnail-img"> 
         <div>${item.title}</div>
       </div>`;
-    looks[item.title] = item;
+    looks[item.id] = item;
   })
   $('.public-looks').html(returnHTML);
 }
 
-function openModal(clickedElement) {
-  let thisText = $(clickedElement).text();
-  console.log("openModal text", thisText);
-  getDataFromApi(thisText, loadMakeupData);
+function openModal(look) {
+  let string = formatLook(look);
+  console.log("string", string);
+  $('.look-info').html(string);
+  $('.modal').show();
+  for (let key in look){
+    console.log(`${key} ${look[key]}`)
+  }
 }
 
-function getDataFromApi(searchTerm, callback) {
-  console.log("getDataFromApi", searchTerm);
-  // Get data about the makeup Look based on the title
+function formatLook(look) {
+  let steps = "";
+  console.log(typeof look.steps);
+  look.steps.toString().split(",").forEach(step => {
+    steps += `<li>${step}</li>`;
+  }) 
+  let products = "";
+  look.products.forEach(product => {
+    products += `<li>${product}</li>`;
+  })
+  let colorthemes = "";
+  look.colortheme.forEach(colortheme => {
+    colorthemes += `<li>${colortheme}</li>`;
+  })
+  return `<div>
+    <img src="${look.image}"/>
+    <h3>${look.title}</h3>
+    <ol>${steps}</ol>
+    <ul>${products}</ul>
+    <p>${look.skintype}</p>
+    <ul>${colorthemes}</ul>
+    <button class="edit-btn" data-ref="${look.id}">Edit</button>
+    <button class="delete-btn" data-ref="${look.id}">Delete</button> 
+  </div>`
 }
+
+// function getDataFromApi(searchTerm, callback) {
+//   console.log("getDataFromApi", searchTerm);
+//   // Get data about the makeup Look based on the title
+// }
 
 function loadMakeupData() {
   console.log("loadMakeupData");
