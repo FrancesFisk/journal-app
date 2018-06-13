@@ -7,7 +7,6 @@ let data = sessionStorage.getItem('authToken'),
 // Ajax calls
 
 // authorize with Token
-console.log("makeup.js ", data);
 $.ajax({
     url: "/api/protected",
     method: "GET",
@@ -37,6 +36,7 @@ $.ajax({
 
 // Event handlers
 
+// click thumbnail to open modal
 $('body').on('click', '.thumbnail', function(e) {
   console.log("thumbnail clicked");
   let id = $(this).attr("data-ref");
@@ -52,6 +52,7 @@ $('.modal').on('click', '.close', function(e) {
 
 // Functions
 
+// Display makeup looks on the page
 function displayMakeupLooks(data) {
   let returnHTML = "";
   looks = {};
@@ -68,6 +69,7 @@ function displayMakeupLooks(data) {
   $('.public-looks').html(returnHTML);
 }
 
+// show modal with look info
 function openModal(look) {
   let string = formatLook(look);
   console.log("string", string);
@@ -78,20 +80,25 @@ function openModal(look) {
   }
 }
 
+// format content in modal
 function formatLook(look) {
   let steps = "";
-  console.log(typeof look.steps);
+  let products = "";
+  let colorthemes = "";
+
+  // Convert objects to string to array, then add to html
   look.steps.toString().split(",").forEach(step => {
     steps += `<li>${step}</li>`;
   }) 
-  let products = "";
-  look.products.forEach(product => {
+  
+  look.products.toString().split(",").forEach(product => {
     products += `<li>${product}</li>`;
   })
-  let colorthemes = "";
-  look.colortheme.forEach(colortheme => {
+ 
+  look.colortheme.toString().split(",").forEach(colortheme => {
     colorthemes += `<li>${colortheme}</li>`;
   })
+
   return `<div>
     <img src="${look.image}"/>
     <h3>${look.title}</h3>
@@ -102,21 +109,6 @@ function formatLook(look) {
     <button class="edit-btn" data-ref="${look.id}">Edit</button>
     <button class="delete-btn" data-ref="${look.id}">Delete</button> 
   </div>`
-}
-
-// function getDataFromApi(searchTerm, callback) {
-//   console.log("getDataFromApi", searchTerm);
-//   // Get data about the makeup Look based on the title
-// }
-
-function loadMakeupData() {
-  console.log("loadMakeupData");
-  // add info about makeup look you want displayed in the modal
-  // add function displayModal() to display the modal with the given info
-}
-
-function displayModal() {
-  // display the modal with the given info from loadMakeupData
 }
 
 });

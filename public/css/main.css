@@ -1,4 +1,12 @@
 
+header {
+  text-align: center;
+}
+
+.logo {
+  height: 100px;
+}
+
 input {
   height: 20px;
   width: 300px;

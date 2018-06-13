@@ -1,12 +1,11 @@
 $(function() {
 
-let files; 
-let steps = 1;
-let products = 1;
-let colorthemes = 1;
+let files,
+  steps = 1,
+  products = 1,
+  colorthemes = 1;
 
 // Handle image files
-
 $('input[type=file]').on('change', prepareUpload); 
 function prepareUpload (event) { files = event.target.files; }
 
@@ -21,11 +20,15 @@ $('#create-look-form').submit(e => {
 
   for(let i = 1; i <= steps; i++) {
     let inputField = $(`input[name=step_${i}]`);
+    let newArray = [];
     // if it exists on the page
     if (inputField.length) {
       stepsArray.push(inputField.val());
     }
+    console.log("stepsArray", stepsArray);
   }
+
+  
 
   for(let i = 1; i <= products; i++) {
     let inputField = $(`input[name=product_${i}]`);
@@ -91,6 +94,16 @@ $('.add-step').click(e => {
     <button class="delete-field">&times;</button></div>
   `;
   $('.steps').append(newHTML);
+  // for(let i = 1; i <= steps; i++) {
+  //   let inputField = $(`input[name=step_${i}]`);
+  //   console.log("inputField", inputField.val());
+  //   let stepsArray = [];
+  //   // if it exists on the page
+  //   if (inputField.length) {
+  //     stepsArray.push(inputField.val());
+  //   }
+  //   console.log("stepsArray", stepsArray);
+  // }
 });
 
 $('.add-product').click(e => {
@@ -115,8 +128,7 @@ $('.add-colortheme').click(e => {
 
 // Delete field in the create look form
 $('.create-look').on('click', '.delete-field', function(e) {
-  $(this).prev().remove();
-  $(this).remove();
+  $(this).parent().remove();
 })
 
 
