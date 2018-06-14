@@ -45,6 +45,9 @@ router.post('/create', jwtAuth, (req, res) => {
   // files refers to uploads
   // fields refers to the input
   let form = new formidable.IncomingForm();
+
+  // req.data (I think?) will be the 'payload', or the data from the request.
+  
   
   form.parse(req, function(err, fields, files) {
     console.log(fields, files);

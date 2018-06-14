@@ -8,11 +8,19 @@ let files,
 // Handle image files
 $('input[type=file]').on('change', prepareUpload); 
 function prepareUpload (event) { files = event.target.files; }
+// $('input[type=file]').on('change', prepareUpload); 
+// function prepareUpload (event) { file = event.target.files[0]; }
 
 // Submit handler for creating a look form
 $('#create-look-form').submit(e => {
   e.preventDefault();
-
+// let formValues = $(e.target).serializeArray();
+// console.log(formValues);
+// const data = {
+  // your payload
+  // this value, that value
+  //file: file
+// }
   let stepsArray = [];
   let productsArray = [];
   let colorthemesArray =[];
@@ -20,16 +28,12 @@ $('#create-look-form').submit(e => {
 
   for(let i = 1; i <= steps; i++) {
     let inputField = $(`input[name=step_${i}]`);
-    let newArray = [];
     // if it exists on the page
     if (inputField.length) {
       stepsArray.push(inputField.val());
     }
-    console.log("stepsArray", stepsArray);
   }
-
   
-
   for(let i = 1; i <= products; i++) {
     let inputField = $(`input[name=product_${i}]`);
     // if it exists on the page
@@ -90,27 +94,17 @@ $('.add-step').click(e => {
   e.preventDefault();
   steps++;
   let newHTML = `
-    <div><input type="text" name="step_${steps}" class="steps multiple-fields-option" />
+    <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
     <button class="delete-field">&times;</button></div>
   `;
   $('.steps').append(newHTML);
-  // for(let i = 1; i <= steps; i++) {
-  //   let inputField = $(`input[name=step_${i}]`);
-  //   console.log("inputField", inputField.val());
-  //   let stepsArray = [];
-  //   // if it exists on the page
-  //   if (inputField.length) {
-  //     stepsArray.push(inputField.val());
-  //   }
-  //   console.log("stepsArray", stepsArray);
-  // }
 });
 
 $('.add-product').click(e => {
   e.preventDefault();
   products++;
   let newHTML = `
-    <div><input type="text" name="product_${products}" class="products multiple-fields-option" />
+    <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
     <button class="delete-field">&times;</button></div>
   `;
   $('.products').append(newHTML);
@@ -120,7 +114,7 @@ $('.add-colortheme').click(e => {
   e.preventDefault();
   colorthemes++;
   let newHTML = `
-    <div><input type="text" name="colortheme_${colorthemes}" class="colorthemes multiple-fields-option" />
+    <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
     <button class="delete-field">&times;</button></div>
   `;
   $('.colorthemes').append(newHTML);
