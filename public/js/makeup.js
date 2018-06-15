@@ -241,6 +241,7 @@ function displayEditForm(look) {
           </div>
           <button class="small italic add-colortheme">Add another color theme</button>
           <button type="submit" class="submit-look-btn">Submit</button>
+          <button type="button" class="cancel-edit">Cancel</button>
       </form>`
   
 }
@@ -258,6 +259,15 @@ $('body').on('click', '.thumbnail', function(e) {
 // Close modal
 $('.modal').on('click', '.close', function(e) {
   $('.modal').hide();
+  $('.look-info').removeClass('hide');
+  $('.edit-info').addClass('hide');
+});
+
+// Cancel edit form / close modal
+$('.modal').on('click', '.cancel-edit', function(e) {
+  $('.modal').hide();
+  $('.look-info').removeClass('hide');
+  $('.edit-info').addClass('hide');
 });
 
 // Delete look
@@ -276,6 +286,8 @@ $( '.modal-content' ).on('click', '.edit-btn', function(e) {
   $('.edit-info').removeClass('hide');
   $('.edit-info').html(displayEditForm(activeLook));
 });
+
+
 
 // get the active look into the display form function
 // how to format form in case parameter is not undefined

@@ -3,17 +3,17 @@
   box-sizing: border-box;
 }
 
-.hide {
-  display: none;
-}
-
 body {
-  margin: 0;
+  margin: 20px;
   font-size: 0;
 }
 
 header {
   text-align: center;
+}
+
+.hide {
+  display: none;
 }
 
 form {
