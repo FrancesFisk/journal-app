@@ -46,9 +46,6 @@ router.post('/create', jwtAuth, (req, res) => {
   // fields refers to the input
   let form = new formidable.IncomingForm();
 
-  // req.data (I think?) will be the 'payload', or the data from the request.
-  
-  
   form.parse(req, function(err, fields, files) {
     console.log(fields, files);
     let oldpath = files['0'].path; 
@@ -80,6 +77,17 @@ router.post('/create', jwtAuth, (req, res) => {
     console.log(req.body);
   })
 })
+
+// router.put('/:id', (req, res) => {
+//   MakeupLook.update({
+//     id: req.params.id,
+//     title: req.body.title,
+//     steps: req.body.steps,
+//     products: req.body.products,
+//     skintype: req.body.skintype,
+//     colortheme: req.body.colortheme
+//   })
+// })
 
 router.delete('/:id', (req, res) => {
   MakeupLook

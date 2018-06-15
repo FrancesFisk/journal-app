@@ -12,7 +12,7 @@ function prepareUpload (event) { files = event.target.files; }
 // function prepareUpload (event) { file = event.target.files[0]; }
 
 // Submit handler for creating a look form
-$('#create-look-form').submit(e => {
+$('#create-look-form').on('submit', e => {
   e.preventDefault();
 // let formValues = $(e.target).serializeArray();
 // console.log(formValues);
@@ -26,6 +26,8 @@ $('#create-look-form').submit(e => {
   let colorthemesArray =[];
   let skinType = $('#select-skintype').val();
 
+ 
+
   for(let i = 1; i <= steps; i++) {
     let inputField = $(`input[name=step_${i}]`);
     // if it exists on the page
@@ -33,6 +35,7 @@ $('#create-look-form').submit(e => {
       stepsArray.push(inputField.val());
     }
   }
+  console.log("stepsArray", stepsArray);
 
     // stepsArray.map(str => str.replace(/,/g, '&#44;'));
  
@@ -84,7 +87,7 @@ $('#create-look-form').submit(e => {
     contentType: false,
     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
     success: function(data) {
-      console.log(data);
+      console.log("Makeup look created: ", data);
     },
     error: function(err) {
       console.log(err.responseText);

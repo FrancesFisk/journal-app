@@ -9,7 +9,7 @@ const makeupLookSchema = mongoose.Schema({
   username: {type: String},
   steps: {type: Array},
   products: {type: Array},
-  skintype: {type: String, enum: ['N/A','oily', 'dry', 'combination', 'normal', 'sensitive']},
+  skintype: {type: String, enum: ['N/A','oily', 'dry', 'combination', 'normal']},
   colortheme: {type: Array},
   publish: {type: Boolean, default: false},
   created: {type: Date, default: Date.now},
