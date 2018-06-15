@@ -33,6 +33,9 @@ $('#create-look-form').submit(e => {
       stepsArray.push(inputField.val());
     }
   }
+
+    // stepsArray.map(str => str.replace(/,/g, '&#44;'));
+ 
   
   for(let i = 1; i <= products; i++) {
     let inputField = $(`input[name=product_${i}]`);
