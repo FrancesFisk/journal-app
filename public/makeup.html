@@ -21,7 +21,34 @@
   </nav>
   <main>
     <section class="create-look">
-      
+        <form id="create-look-form" enctype="multipart/form-data">
+          <input type="file" name="image"/><br/>
+          <label for="title">Title</label><br/>
+          <input type="text" name="title" required/><br/>
+          <div class="steps">
+            <label for="steps">Steps</label><br/>
+            <input type="text" name="step_1"/><br/>
+          </div>
+          <button class="small italic add-step">Add another step</button>
+          <div class="products">
+            <label for="products">Products</label><br/>
+            <input type="text" name="product_1"/>
+          </div>
+          <button class="small italic add-product">Add another product</button>
+          <select id="select-skintype">
+            <option>Select skintype</option>
+            <option>oily</option>
+            <option>dry</option>
+            <option>combination</option>
+            <option>normal</option>
+          </select><br/>
+          <div class="colorthemes">
+            <label for="colorthemes">Color Theme</label><br/>
+            <input type="text" name="colortheme_1"/><br/>
+          </div>
+          <button class="small italic add-colortheme">Add another color theme</button>
+          <button type="submit" class="submit-look-btn">Submit</button>
+        </form>
     </section>
     <section class="public-looks">
     </section>

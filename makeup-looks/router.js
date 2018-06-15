@@ -78,16 +78,16 @@ router.post('/create', jwtAuth, (req, res) => {
   })
 })
 
-// router.put('/:id', (req, res) => {
-//   MakeupLook.update({
-//     id: req.params.id,
-//     title: req.body.title,
-//     steps: req.body.steps,
-//     products: req.body.products,
-//     skintype: req.body.skintype,
-//     colortheme: req.body.colortheme
-//   })
-// })
+router.put('/:id', (req, res) => {
+  MakeupLook.update({
+    id: req.params.id,
+    title: req.body.title,
+    steps: req.body.steps,
+    products: req.body.products,
+    skintype: req.body.skintype,
+    colortheme: req.body.colortheme
+  })
+})
 
 router.delete('/:id', (req, res) => {
   MakeupLook

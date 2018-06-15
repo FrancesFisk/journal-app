@@ -4,14 +4,17 @@ let data = sessionStorage.getItem('authToken'),
   looks,
   activeLook;
 
-// FUNCTIONS
+
+// ****** LOAD PAGE ******
 function loadPage() {
+  console.log("loadpage happening");
   authorizeProtectedPg();
   loadLibrary();
-  $('.create-look').html(displayCreateForm());
 };
+
 loadPage();
 
+// ****** AUTHORIZE PROTECTED AREA ******
 function authorizeProtectedPg() {
 // authorize with Token
   $.ajax({
@@ -25,9 +28,10 @@ function authorizeProtectedPg() {
         console.log(err.responseText);
         window.location = "index.html"
       }
-  })
-}
+  });
+};
 
+// ****** DISPLAY THE LIBRARY ******
 function loadLibrary() { 
   // Get library of looks
   $.ajax({
@@ -41,10 +45,9 @@ function loadLibrary() {
       console.log(err.responseText);
       window.location = "index.html"
     }
-  })
-}
+  });
+};
 
-// Display makeup looks on the page
 function displayMakeupLooks(data) {
   let returnHTML = "";
   looks = {};
@@ -60,20 +63,33 @@ function displayMakeupLooks(data) {
   $('.public-looks').html(returnHTML);
 };
 
-// show modal with look info
+// ****** MODAL ******
+
+// Open modal listener
+$('body').on('click', '.thumbnail', function(e) {
+  let id = $(this).attr("data-ref");
+  activeLook = looks[id];
+  openModal(activeLook);
+});
+
+// Close modal listener
+$('.modal').on('click', '.close', function(e) {
+  $('.modal').hide();
+  $('.look-info').removeClass('hide');
+  $('.edit-info').addClass('hide');
+});
+
 function openModal(look) {
   let string = formatLook(look);
   $('.look-info').html(string);
   $('.modal').show();
-  for (let key in look){
-    console.log(`${key} ${look[key]}`)
-  }
+  // for (let key in look){
+  //   console.log(`${key} ${look[key]}`)
+  // }
 };
-
 
 // format content in modal
 function formatLook(look) {
-  console.log("format look")
   let steps = "";
   let products = "";
   let colorthemes = "";
@@ -108,9 +124,18 @@ function formatLook(look) {
   </div>`
 };
 
-// Delete a look 
+// ****** DELETE A LOOK ******
+
+// Delete look listener
+$( '.modal-content' ).on('click', '.delete-btn',function() {
+  if(confirm("Are you sure you want to delete this look?")) {
+    let id = $(this).attr('data-ref');
+    deleteLook(id);
+    $('.modal').hide();
+ } 
+});
+
 function deleteLook(look, callback) {
-  console.log(look);
   const settings = {
     method: "DELETE",
     success: function() {
@@ -123,39 +148,12 @@ function deleteLook(look, callback) {
   $.ajax(`/api/makeuplooks/${look}`, settings);
 };
 
-function editLook(look, callback) {
-  console.log("editLook called", look);
-}
+// // ****** EDIT A LOOK ******
 
-function displayCreateForm() {
-  return `<form id="create-look-form" enctype="multipart/form-data">
-    <input type="file" name="image"/><br/>
-    <label for="title">Title</label><br/>
-    <input type="text" name="title" required/><br/>
-    <div class="steps">
-      <label for="steps">Steps</label><br/>
-      <input type="text" name="step_1"/><br/>
-    </div>
-    <button class="small italic add-step">Add another step</button>
-    <div class="products">
-      <label for="products">Products</label><br/>
-      <input type="text" name="product_1"/>
-    </div>
-    <button class="small italic add-product">Add another product</button>
-    <select id="select-skintype">
-      <option>Select skintype</option>
-      <option>oily</option>
-      <option>dry</option>
-      <option>combination</option>
-      <option>normal</option>
-    </select><br/>
-    <div class="colorthemes">
-      <label for="colorthemes">Color Theme</label><br/>
-      <input type="text" name="colortheme_1"/><br/>
-    </div>
-    <button class="small italic add-colortheme">Add another color theme</button>
-    <button type="submit" class="submit-look-btn">Submit</button>
-  </form>`;
+function editLook() {
+  // get id of look
+  // grab values from form
+  // input values to PUT request
 }
 
 function displayEditForm(look) {
@@ -169,7 +167,7 @@ function displayEditForm(look) {
       skinTypeOptions+= `<option selected>${item}</option>`
     } else {
       skinTypeOptions+= `<option>${item}</option>`
-    }
+    };
   });
 
   let steps = "";
@@ -183,9 +181,9 @@ function displayEditForm(look) {
       } else {
         steps+= `<div><input type="text" name="step_${stepNumber}" class="step multiple-fields-option" value="${step}"/>
         <button class="delete-field">&times;</button></div>`
-      }
-    })
-  }
+      };
+    });
+  };
 
   let products = "";
   if (!look.products) {
@@ -198,9 +196,9 @@ function displayEditForm(look) {
       } else {
         products+= `<div><input type="text" name="product_${productNumber}" class="product multiple-fields-option" value="${product}"/>
         <button class="delete-field">&times;</button></div>`
-      }
+      };
     });
-  }
+  };
 
   let colorthemes = "";
   if (!look.colortheme) {
@@ -213,11 +211,11 @@ function displayEditForm(look) {
       } else {
         colorthemes+= `<div><input type="text" name="colortheme_${colorthemeNumber}" class="colortheme multiple-fields-option" value="${colortheme}"/>
         <button class="delete-field">&times;</button></div>`
-      }
+      };
     });
-  }
+  };
 
-  return `<form id="create-look-form" enctype="multipart/form-data">
+  return `<form id="edit-look-form" enctype="multipart/form-data">
           <input type="file" name="image"/><br/>
           <label for="title">Title</label><br/>
           <input type="text" name="title" value="${look.title}" required/><br/>
@@ -240,56 +238,80 @@ function displayEditForm(look) {
             <br/>${colorthemes}
           </div>
           <button class="small italic add-colortheme">Add another color theme</button>
-          <button type="submit" class="submit-look-btn">Submit</button>
+          <button type="submit" class="edit-look-btn">Submit</button>
           <button type="button" class="cancel-edit">Cancel</button>
       </form>`
   
-}
+};
 
-// EVENT HANDLERS
+function addStep() {
+  $('.edit-info').on('click', '.add-step', e => {
+    e.preventDefault();
+    let steps = 1;
+    steps++;
+    let newHTML = `
+      <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
+      <button class="delete-field">&times;</button></div>
+    `;
+    $('.steps').append(newHTML);
+  });
+};
 
-// click thumbnail to open modal
-$('body').on('click', '.thumbnail', function(e) {
-  console.log("looks", looks);
-  let id = $(this).attr("data-ref");
-  activeLook = looks[id];
-  openModal(activeLook);
+function addProduct() {
+  $('.edit-info').on('click', '.add-product', e => {
+    e.preventDefault();
+    let products = 1;
+    products++;
+    let newHTML = `
+      <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
+      <button class="delete-field">&times;</button></div>
+    `;
+    $('.products').append(newHTML);
+  });
+};
+
+function addColortheme() {
+  $('.edit-info').on('click', '.add-colortheme', e => {
+    e.preventDefault();
+    let colorthemes = 1;
+    colorthemes++;
+    let newHTML = `
+      <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
+      <button class="delete-field">&times;</button></div>
+    `;
+    $('.colorthemes').append(newHTML);
+  });
+};
+
+// Delete field in the create look form
+$('.edit-info').on('click', '.delete-field', function(e) {
+  $(this).parent().remove();
 });
 
-// Close modal
-$('.modal').on('click', '.close', function(e) {
-  $('.modal').hide();
-  $('.look-info').removeClass('hide');
-  $('.edit-info').addClass('hide');
+// Submit edits button listener
+$('.modal').on('submit', e => {
+  e.preventDefault();
+  let id = $(this).attr('data-ref');
+  editLook(id);
 });
 
-// Cancel edit form / close modal
+// Cancel edit form listener
 $('.modal').on('click', '.cancel-edit', function(e) {
   $('.modal').hide();
   $('.look-info').removeClass('hide');
   $('.edit-info').addClass('hide');
 });
 
-// Delete look
-$( '.modal-content' ).on('click', '.delete-btn',function() {
-  if(confirm("Are you sure you want to delete this look?")) {
-    let id = $(this).attr('data-ref');
-    deleteLook(id);
-    $('.modal').hide();
- } 
-});
-
-// Edit look
+// Edit button listener
 $( '.modal-content' ).on('click', '.edit-btn', function(e) {
   e.preventDefault();
+  addStep();
+  addProduct();
+  addColortheme();
   $('.look-info').addClass('hide');
   $('.edit-info').removeClass('hide');
   $('.edit-info').html(displayEditForm(activeLook));
 });
 
-
-
-// get the active look into the display form function
-// how to format form in case parameter is not undefined
 
 });

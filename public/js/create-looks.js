@@ -8,25 +8,16 @@ let files,
 // Handle image files
 $('input[type=file]').on('change', prepareUpload); 
 function prepareUpload (event) { files = event.target.files; }
-// $('input[type=file]').on('change', prepareUpload); 
-// function prepareUpload (event) { file = event.target.files[0]; }
+
+// ******* CREATE LOOK *********
 
 // Submit handler for creating a look form
-$('#create-look-form').on('submit', e => {
+$('#create-look-form').submit(e => {
   e.preventDefault();
-// let formValues = $(e.target).serializeArray();
-// console.log(formValues);
-// const data = {
-  // your payload
-  // this value, that value
-  //file: file
-// }
   let stepsArray = [];
   let productsArray = [];
   let colorthemesArray =[];
   let skinType = $('#select-skintype').val();
-
- 
 
   for(let i = 1; i <= steps; i++) {
     let inputField = $(`input[name=step_${i}]`);
@@ -129,7 +120,6 @@ $('.add-colortheme').click(e => {
 // Delete field in the create look form
 $('.create-look').on('click', '.delete-field', function(e) {
   $(this).parent().remove();
-})
-
+});
 
 });
