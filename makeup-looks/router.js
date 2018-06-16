@@ -78,14 +78,42 @@ router.post('/create', jwtAuth, (req, res) => {
   })
 })
 
-router.put('/:id', (req, res) => {
-  MakeupLook.update({
-    id: req.params.id,
-    title: req.body.title,
-    steps: req.body.steps,
-    products: req.body.products,
-    skintype: req.body.skintype,
-    colortheme: req.body.colortheme
+router.put('/update', jwtAuth, (req, res) => {
+  // take the incoming object and split the image file from the form data
+  // files refers to uploads
+  // fields refers to the input
+  let form = new formidable.IncomingForm();
+
+  form.parse(req, function(err, fields, files) {
+    console.log(fields, files);
+    let oldpath = files['0'].path; 
+    let newpath = './public/images/' + files['0'].name;
+    let imageUrl = `/images/${files['0'].name}`;
+    fs.rename(oldpath, newpath, function(error) {
+      // keep this?
+      if(error) {
+        throw error
+      }
+    })
+    // if image url undefined, don't include image in object
+    // what if user doesn't add title
+    let object = {
+      image: imageUrl,
+      title: fields.title,
+      steps: fields.steps,
+      products: fields.products,
+      skintype: fields.skintype,
+      colortheme: fields.colortheme
+    };
+    return MakeupLook  
+      .findByIdAndUpdate(fields.id, object, {new: true})
+      .then(newLook => {
+        res.json(newLook.serialize());
+      })
+      .catch(error => {
+        res.send(error);
+      })
+    console.log(req.body);
   })
 })
 

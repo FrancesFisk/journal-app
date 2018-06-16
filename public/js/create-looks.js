@@ -12,7 +12,7 @@ function prepareUpload (event) { files = event.target.files; }
 // ******* CREATE LOOK *********
 
 // Submit handler for creating a look form
-$('#create-look-form').submit(e => {
+$('#create-look-form').submit(function(e) {
   e.preventDefault();
   let stepsArray = [];
   let productsArray = [];

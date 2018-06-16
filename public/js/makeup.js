@@ -7,7 +7,6 @@ let data = sessionStorage.getItem('authToken'),
 
 // ****** LOAD PAGE ******
 function loadPage() {
-  console.log("loadpage happening");
   authorizeProtectedPg();
   loadLibrary();
 };
@@ -148,7 +147,122 @@ function deleteLook(look, callback) {
   $.ajax(`/api/makeuplooks/${look}`, settings);
 };
 
-// // ****** EDIT A LOOK ******
+// ****** EDIT A LOOK ******
+
+$('body').on('submit', '#edit-look-form', function(e) {
+  e.preventDefault();
+  let stepsArray = [];
+  let productsArray = [];
+  let colorthemesArray =[];
+  let skinType = $("#edit-select-skintype").val();
+  let steps = $("#edit-look-form .step").length;
+  let products = $('#edit-look-form .product').length;
+  let colorthemes = $('#edit-look-form .colortheme').length;
+
+  for(let i = 1; i <= steps; i++) {
+    let inputField = $(`#edit-look-form input[name=step_${i}]`);
+    // if it exists on the page
+    if (inputField.length) {
+      stepsArray.push(inputField.val());
+    }
+  }
+
+    // stepsArray.map(str => str.replace(/,/g, '&#44;'));
+ 
+  
+  for(let i = 1; i <= products; i++) {
+    let inputField = $(`#edit-look-form input[name=product_${i}]`);
+    // if it exists on the page
+    if (inputField.length) {
+      productsArray.push(inputField.val());
+    }
+  }
+
+  for(let i = 1; i <= colorthemes; i++) {
+    let inputField = $(`#edit-look-form input[name=colortheme_${i}]`);
+    // if it exists on the page
+    if (inputField.length) {
+      colorthemesArray.push(inputField.val());
+    }
+  }
+
+  // If user doesn't select a skintype
+  if($('#edit-select-skintype').val() === "Select skintype") {
+    skinType = "N/A";
+  }
+
+  // Remove falsy values from arrays
+  stepsArray = stepsArray.filter(Boolean);
+  productsArray = productsArray.filter(Boolean);
+  colorthemesArray = colorthemesArray.filter(Boolean);
+
+  // Compile key/value pairs to send form data
+  let files;
+  let data = new FormData(); 
+  $.each(files, function(key, value) { data.append(key, value); });
+  // first argument is the name
+  data.append("title", $('#edit-look-form input[name=title]').val());
+  data.append("id", $('#edit-look-form input[name=id]').val());
+  data.append("steps", stepsArray);
+  data.append("products", productsArray);
+  data.append("skintype", skinType);
+  data.append("colortheme", colorthemesArray);
+  
+  // API request
+  $.ajax({
+    url: '/api/makeuplooks/update',
+    type: "PUT",
+    data: data,
+    cache: false, 
+    dataType: 'json', 
+    processData: false, 
+    contentType: false,
+    headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
+    success: function(data) {
+      console.log("Makeup look updated: ", data);
+    },
+    error: function(err) {
+      console.log(err.responseText);
+    }
+  });
+});
+
+// Add fields in the create look form
+$('.add-step').click(e => {
+  e.preventDefault();
+  steps++;
+  let newHTML = `
+    <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
+    <button class="delete-field">&times;</button></div>
+  `;
+  $('.steps').append(newHTML);
+});
+
+$('.add-product').click(e => {
+  e.preventDefault();
+  products++;
+  let newHTML = `
+    <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
+    <button class="delete-field">&times;</button></div>
+  `;
+  $('.products').append(newHTML);
+});
+
+$('.add-colortheme').click(e => {
+  e.preventDefault();
+  colorthemes++;
+  let newHTML = `
+    <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
+    <button class="delete-field">&times;</button></div>
+  `;
+  $('.colorthemes').append(newHTML);
+});
+
+// Delete field in the create look form
+$('.create-look').on('click', '.delete-field', function(e) {
+  $(this).parent().remove();
+});
+
 
 function editLook() {
   // get id of look
@@ -219,6 +333,7 @@ function displayEditForm(look) {
           <input type="file" name="image"/><br/>
           <label for="title">Title</label><br/>
           <input type="text" name="title" value="${look.title}" required/><br/>
+          <input type="hidden" name="id" value="${look.id}"/>
           <div class="steps">
           <label for="steps">Steps</label>
             <br/>${steps}
@@ -229,7 +344,7 @@ function displayEditForm(look) {
             <br/>${products}
           </div>
           <button class="small italic add-product">Add another product</button>
-          <select id="select-skintype">
+          <select id="edit-select-skintype">
             <option>Select skintype</option>
             ${skinTypeOptions}
           </select>
@@ -245,7 +360,7 @@ function displayEditForm(look) {
 };
 
 function addStep() {
-  $('.edit-info').on('click', '.add-step', e => {
+  $('.edit-info').on('click', '.add-step', function(e) {
     e.preventDefault();
     let steps = 1;
     steps++;
@@ -253,7 +368,7 @@ function addStep() {
       <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
       <button class="delete-field">&times;</button></div>
     `;
-    $('.steps').append(newHTML);
+    $(this).prev().append(newHTML);
   });
 };
 
