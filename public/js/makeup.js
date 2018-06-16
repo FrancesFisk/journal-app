@@ -228,7 +228,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
 });
 
 // Add fields in the create look form
-$('.add-step').click(e => {
+$('#edit-look-form .add-step').click(e => {
   e.preventDefault();
   steps++;
   let newHTML = `
@@ -238,7 +238,7 @@ $('.add-step').click(e => {
   $('.steps').append(newHTML);
 });
 
-$('.add-product').click(e => {
+$('#edit-look-form .add-product').click(e => {
   e.preventDefault();
   products++;
   let newHTML = `
@@ -248,7 +248,7 @@ $('.add-product').click(e => {
   $('.products').append(newHTML);
 });
 
-$('.add-colortheme').click(e => {
+$('#edit-look-form .add-colortheme').click(e => {
   e.preventDefault();
   colorthemes++;
   let newHTML = `
