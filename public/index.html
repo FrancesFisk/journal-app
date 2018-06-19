@@ -6,28 +6,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/css/grid.css" type="text/css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
-<body>
-    <form role="form" method="post" class="signup-form">
-        <fieldset>
-            <legend>Sign Up</legend>
-            <label for="username" >Username</label>
-            <input type="text" class="new-username" required>
-            <label for="user-password">Password</label>
-            <input type="password" class="new-password" required>
-            <button type="submit" class="signup-btn">Sign up</button>
-        </fieldset>
-    </form>
-    <form role="form" action="/login" method="post" class="login-form">
-        <fieldset>
-            <legend>Log in</legend>
-            <label for="username">Username</label>
-            <input type="text" class="existing-username" required>
-            <label for="user-password">Password</label>
-            <input type="password" class="existing-password" required>
-            <button type="submit" class="login-btn">Login</button>
-        </fieldset>
-    </form>
+<body class="login-pg">
+    <header>
+        <img src="/images/makeitup-logo.png" alt="make it up logo" class="logo"/>
+    </header>
+    <section class="sub-header">
+        <h3 class="app-description">Create, share and browse makeup looks</h3>
+    </section>
+    <div class="sign-in-forms">
+        <form role="form" method="post" class="signup-form">
+            <fieldset>
+                <legend>SIGN UP</legend>
+                <label for="username" >Username</label>
+                <input type="text" class="new-username" required>
+                <label for="user-password">Password</label>
+                <input type="password" class="new-password" required>
+                <button type="submit" class="signup-btn">Sign up</button>
+            </fieldset>
+        </form>
+        <form role="form" action="/login" method="post" class="login-form">
+            <fieldset>
+                <legend>LOG IN</legend>
+                <label for="username">Username</label>
+                <input type="text" class="existing-username" required>
+                <label for="user-password">Password</label>
+                <input type="password" class="existing-password" required>
+                <button type="submit" class="login-btn">Login</button>
+            </fieldset>
+        </form>
+    </div>
+    <section class="demo-account">
+        <h4>Not ready to sign up? <br/>Log in with a demo account<button type="submit" class="demo-btn">here</button></h4>
+    </section>
     <a href="/makeup.html" class="link-to-app">Link to makeup html</a>
     <button class="logout-btn">Log out</button>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

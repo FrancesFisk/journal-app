@@ -15,8 +15,49 @@ body {
   margin: 40px;
 }
 
+.login-pg {
+  background: none;
+  margin: 20px;
+}
+
 header {
   text-align: center;
+}
+
+.login-pg .logo {
+  margin: 0;
+  width: 60%;
+}
+
+.sub-header {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.app-description {
+  font-size: 20px;
+  margin: 5px;
+}
+
+.sign-in-forms {
+  background-image: linear-gradient(-225deg, #E3FDF5 35%, #FFE6FA 70%);
+  box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+  padding: 10px;
+  margin: 25px 10px;
+}
+
+.sign-in-forms form {
+  margin: 15px;
+}
+
+.sign-in-forms label{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+}
+
+.sign-in-forms input {
+  margin: 7px 0;
+  height: 30px;
 }
 
 .hide {
@@ -25,6 +66,17 @@ header {
 
 .link-to-app {
   font-size:12px;
+}
+
+.demo-account {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.demo-btn {
+  border: 1px solid black;
+  background: none;
+  margin-left: 5px;
 }
 
 main {
