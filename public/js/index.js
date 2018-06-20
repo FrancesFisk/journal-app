@@ -65,6 +65,56 @@ function postLogin(user, pw) {
   })
 }
 
-// Logout Function
+function loadPage() {
+  loadLibrary();
+};
+
+loadPage();
+
+
+// ****** DISPLAY THE LIBRARY ******
+function loadLibrary() { 
+  // Get library of looks
+  $.ajax({
+    url: "/api/makeuplooks",
+    method: "GET",
+    success: function(data) {
+      console.log("get makeup looks", data);
+      displayMakeupLooks(data);
+    },
+    error: function(err) {
+      console.log(err.responseText);
+      window.location = "index.html"
+    }
+  });
+};
+
+function displayMakeupLooks(data) {
+  let returnHTML = "";
+  looks = {};
+  let results = data.makeupLooks;
+  results.forEach(function(item) {
+    returnHTML += 
+      `<div class="thumbnail col-4" data-ref="${item.id}"> 
+        <img src="${item.image}" class="thumbnail-img"> 
+        <div>${item.title}</div>
+      </div>`;
+    looks[item.id] = item;
+  })
+  $('.public-looks').html(returnHTML);
+};
+
+// Logout 
+$('.logout-form').submit(function(e) {
+  e.preventDefault();
+  // Remove saved data from sessionStorage
+  sessionStorage.clear();
+  // if in makeup.html, force user back to index.html
+  if(location.pathname === '/makeup.html') {
+    window.location = 'index.html';
+  }
+})
+
+
 
 });

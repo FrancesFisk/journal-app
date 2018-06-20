@@ -29,17 +29,11 @@ router.get('/', (req, res) => {
     });
 });
 
-// For testing
-// router.post('/create', (req, res) => {
-//   let object = {
-//     image: req.body.image,
-//     title: req.body.title,
-//     username: req.body.username,
-//     steps: req.body.steps,
-//     products: req.body.products,
-//     skintype: req.body.skintype,
-//     colortheme: req.body.colortheme
-//   };
+// return logged in username
+router.post('/returnusername', jwtAuth, (req, res) => {
+  res.send(req.user.username);
+})
+
 router.post('/create', jwtAuth, (req, res) => {
   // take the incoming object and split the image file from the form data
   // files refers to uploads
@@ -83,28 +77,39 @@ router.put('/update', jwtAuth, (req, res) => {
   // files refers to uploads
   // fields refers to the input
   let form = new formidable.IncomingForm();
+  // make sure none of 89-97 hits if there are no files
+  // adjust 101-108, if it doesn't have anything in it, don't want that image url to exist
 
   form.parse(req, function(err, fields, files) {
     console.log(fields, files);
-    let oldpath = files['0'].path; 
-    let newpath = './public/images/' + files['0'].name;
-    let imageUrl = `/images/${files['0'].name}`;
-    fs.rename(oldpath, newpath, function(error) {
-      // keep this?
-      if(error) {
-        throw error
-      }
-    })
-    // if image url undefined, don't include image in object
-    // what if user doesn't add title
-    let object = {
-      image: imageUrl,
-      title: fields.title,
-      steps: fields.steps,
-      products: fields.products,
-      skintype: fields.skintype,
-      colortheme: fields.colortheme
-    };
+    let object;
+    if (Object.keys(files).length > 0) {
+      let oldpath = files['0'].path; 
+      let newpath = './public/images/' + files['0'].name;
+      let imageUrl = `/images/${files['0'].name}`;
+      fs.rename(oldpath, newpath, function(error) {
+        // keep this?
+        if(error) {
+          throw error
+        }
+      })
+      object = {
+        image: imageUrl,
+        title: fields.title,
+        steps: fields.steps,
+        products: fields.products,
+        skintype: fields.skintype,
+        colortheme: fields.colortheme
+      };  
+    } else {
+      object = {
+        title: fields.title,
+        steps: fields.steps,
+        products: fields.products,
+        skintype: fields.skintype,
+        colortheme: fields.colortheme
+      };  
+    }
     return MakeupLook  
       .findByIdAndUpdate(fields.id, object, {new: true})
       .then(newLook => {

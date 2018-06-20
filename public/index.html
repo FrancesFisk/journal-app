@@ -38,13 +38,31 @@
                 <button type="submit" class="login-btn">Login</button>
             </fieldset>
         </form>
+        <form role="form" action="/logout" method="post" class="logout-form">
+            <fieldset>
+                <legend>LOG out</legend>
+                <button type="submit" class="logout-btn">Log out</button>
+            </fieldset>
+        </form>
     </div>
     <section class="demo-account">
         <h4>Not ready to sign up? <br/>Log in with a demo account<button type="submit" class="demo-btn">here</button></h4>
     </section>
+    <section class="public-looks">
+    </section>
+    <div class="modal">
+        <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="look-info">
+        </div>
+        <div class="edit-info hide">
+        </div>
+        </div>
+    </div>
     <a href="/makeup.html" class="link-to-app">Link to makeup html</a>
     <button class="logout-btn">Log out</button>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="/js/index.js"></script>
+    <script src="/js/module-modal.js"></script>
 </body>
 </html>

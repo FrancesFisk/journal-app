@@ -2,8 +2,11 @@ $(function() {
 
 let data = sessionStorage.getItem('authToken'),
   looks,
-  activeLook;
+  activeLook,
+  files;
 
+$('body').on('change', '#edit-file-uploader', prepareUpload); 
+function prepareUpload (event) { files = event.target.files; }
 
 // ****** LOAD PAGE ******
 function loadPage() {
@@ -31,402 +34,406 @@ function authorizeProtectedPg() {
 };
 
 // ****** DISPLAY THE LIBRARY ******
-function loadLibrary() { 
-  // Get library of looks
-  $.ajax({
-    url: "/api/makeuplooks",
-    method: "GET",
-    success: function(data) {
-      console.log("get makeup looks", data);
-      displayMakeupLooks(data);
-    },
-    error: function(err) {
-      console.log(err.responseText);
-      window.location = "index.html"
-    }
-  });
-};
+// function loadLibrary() { 
+//   // Get library of looks
+//   $.ajax({
+//     url: "/api/makeuplooks",
+//     method: "GET",
+//     success: function(data) {
+//       console.log("get makeup looks", data);
+//       displayMakeupLooks(data);
+//     },
+//     error: function(err) {
+//       console.log(err.responseText);
+//       window.location = "index.html"
+//     }
+//   });
+// };
 
-function displayMakeupLooks(data) {
-  let returnHTML = "";
-  looks = {};
-  let results = data.makeupLooks;
-  results.forEach(function(item) {
-    returnHTML += 
-      `<div class="thumbnail" data-ref="${item.id}"> 
-        <img src="${item.image}" class="thumbnail-img"> 
-        <div>${item.title}</div>
-      </div>`;
-    looks[item.id] = item;
-  })
-  $('.public-looks').html(returnHTML);
-};
+// function displayMakeupLooks(data) {
+//   let returnHTML = "";
+//   looks = {};
+//   let results = data.makeupLooks;
+//   results.forEach(function(item) {
+//     returnHTML += 
+//       `<div class="thumbnail col-4" data-ref="${item.id}"> 
+//         <img src="${item.image}" class="thumbnail-img"> 
+//         <div>${item.title}</div>
+//       </div>`;
+//     looks[item.id] = item;
+//   })
+//   $('.public-looks').html(returnHTML);
+// };
 
-// ****** MODAL ******
+// // ****** MODAL ******
 
-// Open modal listener
-$('body').on('click', '.thumbnail', function(e) {
-  let id = $(this).attr("data-ref");
-  activeLook = looks[id];
-  openModal(activeLook);
-});
+// // Open modal listener
+// $('body').on('click', '.thumbnail', function(e) {
+//   let id = $(this).attr("data-ref");
+//   activeLook = looks[id];
+//   openModal(activeLook);
+// });
 
-// Close modal listener
-$('.modal').on('click', '.close', function(e) {
-  $('.modal').hide();
-  $('.look-info').removeClass('hide');
-  $('.edit-info').addClass('hide');
-});
+// // Close modal listener
+// $('.modal').on('click', '.close', function(e) {
+//   $('.modal').hide();
+//   $('.look-info').removeClass('hide');
+//   $('.edit-info').addClass('hide');
+// });
 
-function openModal(look) {
-  let string = formatLook(look);
-  $('.look-info').html(string);
-  $('.modal').show();
-  // for (let key in look){
-  //   console.log(`${key} ${look[key]}`)
-  // }
-};
+// function openModal(look) {
+//   let string = formatLook(look);
+//   $('.look-info').html(string);
+//   $('.modal').show();
+//   // for (let key in look){
+//   //   console.log(`${key} ${look[key]}`)
+//   // }
+// };
 
 // format content in modal
-function formatLook(look) {
-  let steps = "";
-  let products = "";
-  let colorthemes = "";
+// function formatLook(look) {
+//   let steps = "";
+//   let products = "";
+//   let colorthemes = "";
 
-  // Convert objects to string to array, then add to html
-  look.steps.toString().split(",").forEach(step => {
-    steps += `<li>${step}</li>`;
-  }) ;
+//   // Convert objects to string to array, then add to html
+//   look.steps.toString().split(",").forEach(step => {
+//     steps += `<li>${step}</li>`;
+//   }) ;
  
   
-  look.products.toString().split(",").forEach(product => {
-    products += `<li>${product}</li>`;
-  });
+//   look.products.toString().split(",").forEach(product => {
+//     products += `<li>${product}</li>`;
+//   });
  
-  look.colortheme.toString().split(",").forEach(colortheme => {
-    colorthemes += `<li>${colortheme}</li>`;
-  });
+//   look.colortheme.toString().split(",").forEach(colortheme => {
+//     colorthemes += `<li>${colortheme}</li>`;
+//   });
 
-  return `<div>
-    <img src="${look.image}"/>
-    <h3>${look.title}</h3>
-    <h4>Steps</h4>
-    <ol>${steps}</ol>
-    <h4>Products</h4>
-    <ul>${products}</ul>
-    <h4>Skin Type</h4>
-    <p>${look.skintype}</p>
-    <h4>Color Themes</h4>
-    <ul>${colorthemes}</ul>
-    <button class="edit-btn" data-ref="${look.id}">Edit</button>
-    <button class="delete-btn" data-ref="${look.id}">Delete</button> 
-  </div>`
-};
+//   return `<div>
+//     <img src="${look.image}"/>
+//     <h3>${look.title}</h3>
+//     <h4>Steps</h4>
+//     <ol>${steps}</ol>
+//     <h4>Products</h4>
+//     <ul>${products}</ul>
+//     <h4>Skin Type</h4>
+//     <p>${look.skintype}</p>
+//     <h4>Color Themes</h4>
+//     <ul>${colorthemes}</ul>
+//     <button class="edit-btn" data-ref="${look.id}">Edit</button>
+//     <button class="delete-btn" data-ref="${look.id}">Delete</button> 
+//   </div>`
+// };
 
-// ****** DELETE A LOOK ******
+// // ****** DELETE A LOOK ******
 
-// Delete look listener
-$( '.modal-content' ).on('click', '.delete-btn',function() {
-  if(confirm("Are you sure you want to delete this look?")) {
-    let id = $(this).attr('data-ref');
-    deleteLook(id);
-    $('.modal').hide();
- } 
-});
+// // Delete look listener
+// $( '.modal-content' ).on('click', '.delete-btn',function() {
+//   if(confirm("Are you sure you want to delete this look?")) {
+//     let id = $(this).attr('data-ref');
+//     deleteLook(id);
+//     $('.modal').hide();
+//  } 
+// });
 
-function deleteLook(look, callback) {
-  const settings = {
-    method: "DELETE",
-    success: function() {
-      console.log("Look deleted");
-    },
-    error: function(err) {
-      console.log(err.responseText);
-    }
-  }
-  $.ajax(`/api/makeuplooks/${look}`, settings);
-};
+// function deleteLook(look, callback) {
+//   const settings = {
+//     method: "DELETE",
+//     success: function() {
+//       console.log("Look deleted");
+//       // remove from local object
+//       looks[look] = undefined;
+//       // remove from page
+//       $(`div[data-ref=${look}]`).remove();
+//     },
+//     error: function(err) {
+//       console.log(err.responseText);
+//     }
+//   }
+//   $.ajax(`/api/makeuplooks/${look}`, settings);
+// };
 
-// ****** EDIT A LOOK ******
+// // ****** EDIT A LOOK ******
 
-$('body').on('submit', '#edit-look-form', function(e) {
-  e.preventDefault();
-  let stepsArray = [];
-  let productsArray = [];
-  let colorthemesArray =[];
-  let skinType = $("#edit-select-skintype").val();
-  let steps = $("#edit-look-form .step").length;
-  let products = $('#edit-look-form .product').length;
-  let colorthemes = $('#edit-look-form .colortheme').length;
+// $('body').on('submit', '#edit-look-form', function(e) {
+//   e.preventDefault();
+//   let stepsArray = [];
+//   let productsArray = [];
+//   let colorthemesArray =[];
+//   let skinType = $("#edit-select-skintype").val();
+//   let steps = $("#edit-look-form .step").length;
+//   let products = $('#edit-look-form .product').length;
+//   let colorthemes = $('#edit-look-form .colortheme').length;
 
-  for(let i = 1; i <= steps; i++) {
-    let inputField = $(`#edit-look-form input[name=step_${i}]`);
-    // if it exists on the page
-    if (inputField.length) {
-      stepsArray.push(inputField.val());
-    }
-  }
+//   for(let i = 1; i <= steps; i++) {
+//     let inputField = $(`#edit-look-form input[name=step_${i}]`);
+//     // if it exists on the page
+//     if (inputField.length) {
+//       stepsArray.push(inputField.val());
+//     }
+//   }
 
-    // stepsArray.map(str => str.replace(/,/g, '&#44;'));
+//     // stepsArray.map(str => str.replace(/,/g, '&#44;'));
  
   
-  for(let i = 1; i <= products; i++) {
-    let inputField = $(`#edit-look-form input[name=product_${i}]`);
-    // if it exists on the page
-    if (inputField.length) {
-      productsArray.push(inputField.val());
-    }
-  }
+//   for(let i = 1; i <= products; i++) {
+//     let inputField = $(`#edit-look-form input[name=product_${i}]`);
+//     // if it exists on the page
+//     if (inputField.length) {
+//       productsArray.push(inputField.val());
+//     }
+//   }
 
-  for(let i = 1; i <= colorthemes; i++) {
-    let inputField = $(`#edit-look-form input[name=colortheme_${i}]`);
-    // if it exists on the page
-    if (inputField.length) {
-      colorthemesArray.push(inputField.val());
-    }
-  }
+//   for(let i = 1; i <= colorthemes; i++) {
+//     let inputField = $(`#edit-look-form input[name=colortheme_${i}]`);
+//     // if it exists on the page
+//     if (inputField.length) {
+//       colorthemesArray.push(inputField.val());
+//     }
+//   }
 
-  // If user doesn't select a skintype
-  if($('#edit-select-skintype').val() === "Select skintype") {
-    skinType = "N/A";
-  }
+//   // If user doesn't select a skintype
+//   if($('#edit-select-skintype').val() === "Select skintype") {
+//     skinType = "N/A";
+//   }
 
-  // Remove falsy values from arrays
-  stepsArray = stepsArray.filter(Boolean);
-  productsArray = productsArray.filter(Boolean);
-  colorthemesArray = colorthemesArray.filter(Boolean);
+//   // Remove falsy values from arrays
+//   stepsArray = stepsArray.filter(Boolean);
+//   productsArray = productsArray.filter(Boolean);
+//   colorthemesArray = colorthemesArray.filter(Boolean);
 
-  // Compile key/value pairs to send form data
-  let files;
-  let data = new FormData(); 
-  $.each(files, function(key, value) { data.append(key, value); });
-  // first argument is the name
-  data.append("title", $('#edit-look-form input[name=title]').val());
-  data.append("id", $('#edit-look-form input[name=id]').val());
-  data.append("steps", stepsArray);
-  data.append("products", productsArray);
-  data.append("skintype", skinType);
-  data.append("colortheme", colorthemesArray);
+//   // Compile key/value pairs to send form data
+//   console.log("files", files);
+//   let data = new FormData(); 
+//   $.each(files, function(key, value) { data.append(key, value); });
+//   // first argument is the name
+//   data.append("title", $('#edit-look-form input[name=title]').val());
+//   data.append("id", $('#edit-look-form input[name=id]').val());
+//   data.append("steps", stepsArray);
+//   data.append("products", productsArray);
+//   data.append("skintype", skinType);
+//   data.append("colortheme", colorthemesArray);
   
-  // API request
-  $.ajax({
-    url: '/api/makeuplooks/update',
-    type: "PUT",
-    data: data,
-    cache: false, 
-    dataType: 'json', 
-    processData: false, 
-    contentType: false,
-    headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
-    success: function(data) {
-      console.log("Makeup look updated: ", data);
-    },
-    error: function(err) {
-      console.log(err.responseText);
-    }
-  });
-});
+//   // API request
+//   $.ajax({
+//     url: '/api/makeuplooks/update',
+//     type: "PUT",
+//     data: data,
+//     cache: false, 
+//     dataType: 'json', 
+//     processData: false, 
+//     contentType: false,
+//     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
+//     success: function(data) {
+//       console.log("Makeup look updated: ", data);
+//     },
+//     error: function(err) {
+//       console.log(err.responseText);
+//     }
+//   });
+// });
 
-// Add fields in the create look form
-$('#edit-look-form .add-step').click(e => {
-  e.preventDefault();
-  steps++;
-  let newHTML = `
-    <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
-    <button class="delete-field">&times;</button></div>
-  `;
-  $('.steps').append(newHTML);
-});
+// // Add fields in the create look form
+// $('#edit-look-form .add-step').click(e => {
+//   e.preventDefault();
+//   steps++;
+//   let newHTML = `
+//     <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
+//     <button class="delete-field">&times;</button></div>
+//   `;
+//   $('.steps').append(newHTML);
+// });
 
-$('#edit-look-form .add-product').click(e => {
-  e.preventDefault();
-  products++;
-  let newHTML = `
-    <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
-    <button class="delete-field">&times;</button></div>
-  `;
-  $('.products').append(newHTML);
-});
+// $('#edit-look-form .add-product').click(e => {
+//   e.preventDefault();
+//   products++;
+//   let newHTML = `
+//     <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
+//     <button class="delete-field">&times;</button></div>
+//   `;
+//   $('.products').append(newHTML);
+// });
 
-$('#edit-look-form .add-colortheme').click(e => {
-  e.preventDefault();
-  colorthemes++;
-  let newHTML = `
-    <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
-    <button class="delete-field">&times;</button></div>
-  `;
-  $('.colorthemes').append(newHTML);
-});
+// $('#edit-look-form .add-colortheme').click(e => {
+//   e.preventDefault();
+//   colorthemes++;
+//   let newHTML = `
+//     <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
+//     <button class="delete-field">&times;</button></div>
+//   `;
+//   $('.colorthemes').append(newHTML);
+// });
 
-// Delete field in the create look form
-$('.create-look').on('click', '.delete-field', function(e) {
-  $(this).parent().remove();
-});
+// // Delete field in the create look form
+// $('.create-look').on('click', '.delete-field', function(e) {
+//   $(this).parent().remove();
+// });
 
 
-function editLook() {
-  // get id of look
-  // grab values from form
-  // input values to PUT request
-}
+// function editLook() {
+//   // get id of look
+//   // grab values from form
+//   // input values to PUT request
+// }
 
-function displayEditForm(look) {
-  let stepsArray = look.steps[0].split(",");
-  let productsArray = look.products[0].split(",");
-  let colorthemesArray = look.colortheme[0].split(",");
+// function displayEditForm(look) {
+//   let stepsArray = look.steps[0].split(",");
+//   let productsArray = look.products[0].split(",");
+//   let colorthemesArray = look.colortheme[0].split(",");
 
-  let skinTypeOptions = "";
-  ['oily', 'dry', 'combination', 'normal'].forEach(item => {
-    if(look.skintype === item) {
-      skinTypeOptions+= `<option selected>${item}</option>`
-    } else {
-      skinTypeOptions+= `<option>${item}</option>`
-    };
-  });
+//   let skinTypeOptions = "";
+//   ['oily', 'dry', 'combination', 'normal'].forEach(item => {
+//     if(look.skintype === item) {
+//       skinTypeOptions+= `<option selected>${item}</option>`
+//     } else {
+//       skinTypeOptions+= `<option>${item}</option>`
+//     };
+//   });
 
-  let steps = "";
-  if (!look.steps) {
-    steps = `<input type="text" name="step_1" class="step"/><br/>`;
-  } else {
-    stepsArray.forEach((step, index) => {
-      let stepNumber = index +1;
-      if(index === 0) {
-        steps = `<input type="text" name="step_1" class="step" value="${step}"/><br/>`;
-      } else {
-        steps+= `<div><input type="text" name="step_${stepNumber}" class="step multiple-fields-option" value="${step}"/>
-        <button class="delete-field">&times;</button></div>`
-      };
-    });
-  };
+//   let steps = "";
+//   if (!look.steps) {
+//     steps = `<input type="text" name="step_1" class="step"/><br/>`;
+//   } else {
+//     stepsArray.forEach((step, index) => {
+//       let stepNumber = index +1;
+//       if(index === 0) {
+//         steps = `<input type="text" name="step_1" class="step" value="${step}"/><br/>`;
+//       } else {
+//         steps+= `<div><input type="text" name="step_${stepNumber}" class="step multiple-fields-option" value="${step}"/>
+//         <button class="delete-field">&times;</button></div>`
+//       };
+//     });
+//   };
 
-  let products = "";
-  if (!look.products) {
-    products = `<input type="text" name="product_1" class="product"/><br/>`;
-  } else {
-    productsArray.forEach((product, index) => {
-      let productNumber = index +1;
-      if(index === 0) {
-        products = `<input type="text" name="product_1" class="product" value="${product}"/><br/>`;
-      } else {
-        products+= `<div><input type="text" name="product_${productNumber}" class="product multiple-fields-option" value="${product}"/>
-        <button class="delete-field">&times;</button></div>`
-      };
-    });
-  };
+//   let products = "";
+//   if (!look.products) {
+//     products = `<input type="text" name="product_1" class="product"/><br/>`;
+//   } else {
+//     productsArray.forEach((product, index) => {
+//       let productNumber = index +1;
+//       if(index === 0) {
+//         products = `<input type="text" name="product_1" class="product" value="${product}"/><br/>`;
+//       } else {
+//         products+= `<div><input type="text" name="product_${productNumber}" class="product multiple-fields-option" value="${product}"/>
+//         <button class="delete-field">&times;</button></div>`
+//       };
+//     });
+//   };
 
-  let colorthemes = "";
-  if (!look.colortheme) {
-    colorthemes = `<input type="text" name="colortheme_1" class="product"/><br/>`;
-  } else {
-    colorthemesArray.forEach((colortheme, index) => {
-      let colorthemeNumber = index +1;
-      if(index === 0) {
-        colorthemes = `<input type="text" name="colortheme_1" class="colortheme" value="${colortheme}"/><br/>`;
-      } else {
-        colorthemes+= `<div><input type="text" name="colortheme_${colorthemeNumber}" class="colortheme multiple-fields-option" value="${colortheme}"/>
-        <button class="delete-field">&times;</button></div>`
-      };
-    });
-  };
+//   let colorthemes = "";
+//   if (!look.colortheme) {
+//     colorthemes = `<input type="text" name="colortheme_1" class="product"/><br/>`;
+//   } else {
+//     colorthemesArray.forEach((colortheme, index) => {
+//       let colorthemeNumber = index +1;
+//       if(index === 0) {
+//         colorthemes = `<input type="text" name="colortheme_1" class="colortheme" value="${colortheme}"/><br/>`;
+//       } else {
+//         colorthemes+= `<div><input type="text" name="colortheme_${colorthemeNumber}" class="colortheme multiple-fields-option" value="${colortheme}"/>
+//         <button class="delete-field">&times;</button></div>`
+//       };
+//     });
+//   };
 
-  return `<form id="edit-look-form" enctype="multipart/form-data">
-          <input type="file" name="image"/><br/>
-          <label for="title">Title</label><br/>
-          <input type="text" name="title" value="${look.title}" required/><br/>
-          <input type="hidden" name="id" value="${look.id}"/>
-          <div class="steps">
-          <label for="steps">Steps</label>
-            <br/>${steps}
-          </div>
-          <button class="small italic add-step">Add another step</button>
-          <div class="products">
-            <label for="products">Products</label>
-            <br/>${products}
-          </div>
-          <button class="small italic add-product">Add another product</button>
-          <select id="edit-select-skintype">
-            <option>Select skintype</option>
-            ${skinTypeOptions}
-          </select>
-          <div class="colorthemes">
-            <label for="colorthemes">Color Themes</label>
-            <br/>${colorthemes}
-          </div>
-          <button class="small italic add-colortheme">Add another color theme</button>
-          <button type="submit" class="edit-look-btn">Submit</button>
-          <button type="button" class="cancel-edit">Cancel</button>
-      </form>`
+//   return `<form id="edit-look-form" enctype="multipart/form-data">
+//           <input type="file" id="edit-file-uploader" name="image"/><br/>
+//           <label for="title">Title</label><br/>
+//           <input type="text" name="title" value="${look.title}" required/><br/>
+//           <input type="hidden" name="id" value="${look.id}"/>
+//           <div class="steps">
+//           <label for="steps">Steps</label>
+//             <br/>${steps}
+//           </div>
+//           <button class="small italic add-step">Add another step</button>
+//           <div class="products">
+//             <label for="products">Products</label>
+//             <br/>${products}
+//           </div>
+//           <button class="small italic add-product">Add another product</button>
+//           <select id="edit-select-skintype">
+//             <option>Select skintype</option>
+//             ${skinTypeOptions}
+//           </select>
+//           <div class="colorthemes">
+//             <label for="colorthemes">Color Themes</label>
+//             <br/>${colorthemes}
+//           </div>
+//           <button class="small italic add-colortheme">Add another color theme</button>
+//           <button type="submit" class="edit-look-btn">Submit</button>
+//           <button type="button" class="cancel-edit">Cancel</button>
+//       </form>`
   
-};
+// };
 
-function addStep() {
-  $('.edit-info').on('click', '.add-step', function(e) {
-    e.preventDefault();
-    let steps = 1;
-    steps++;
-    let newHTML = `
-      <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
-      <button class="delete-field">&times;</button></div>
-    `;
-    $(this).prev().append(newHTML);
-  });
-};
+// function addStep() {
+//   $('.edit-info').on('click', '.add-step', function(e) {
+//     e.preventDefault();
+//     let steps = 1;
+//     steps++;
+//     let newHTML = `
+//       <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
+//       <button class="delete-field">&times;</button></div>
+//     `;
+//     $(this).prev().append(newHTML);
+//   });
+// };
 
-function addProduct() {
-  $('.edit-info').on('click', '.add-product', e => {
-    e.preventDefault();
-    let products = 1;
-    products++;
-    let newHTML = `
-      <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
-      <button class="delete-field">&times;</button></div>
-    `;
-    $('.products').append(newHTML);
-  });
-};
+// function addProduct() {
+//   $('.edit-info').on('click', '.add-product', e => {
+//     e.preventDefault();
+//     let products = 1;
+//     products++;
+//     let newHTML = `
+//       <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
+//       <button class="delete-field">&times;</button></div>
+//     `;
+//     $('.products').append(newHTML);
+//   });
+// };
 
-function addColortheme() {
-  $('.edit-info').on('click', '.add-colortheme', e => {
-    e.preventDefault();
-    let colorthemes = 1;
-    colorthemes++;
-    let newHTML = `
-      <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
-      <button class="delete-field">&times;</button></div>
-    `;
-    $('.colorthemes').append(newHTML);
-  });
-};
+// function addColortheme() {
+//   $('.edit-info').on('click', '.add-colortheme', e => {
+//     e.preventDefault();
+//     let colorthemes = 1;
+//     colorthemes++;
+//     let newHTML = `
+//       <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
+//       <button class="delete-field">&times;</button></div>
+//     `;
+//     $('.colorthemes').append(newHTML);
+//   });
+// };
 
-// Delete field in the create look form
-$('.edit-info').on('click', '.delete-field', function(e) {
-  $(this).parent().remove();
-});
+// // Delete field in the create look form
+// $('.edit-info').on('click', '.delete-field', function(e) {
+//   $(this).parent().remove();
+// });
 
-// Submit edits button listener
-$('.modal').on('submit', e => {
-  e.preventDefault();
-  let id = $(this).attr('data-ref');
-  editLook(id);
-});
+// // Submit edits button listener
+// $('.modal').on('submit', e => {
+//   e.preventDefault();
+//   let id = $(this).attr('data-ref');
+//   editLook(id);
+// });
 
-// Cancel edit form listener
-$('.modal').on('click', '.cancel-edit', function(e) {
-  $('.modal').hide();
-  $('.look-info').removeClass('hide');
-  $('.edit-info').addClass('hide');
-});
+// // Cancel edit form listener
+// $('.modal').on('click', '.cancel-edit', function(e) {
+//   $('.modal').hide();
+//   $('.look-info').removeClass('hide');
+//   $('.edit-info').addClass('hide');
+// });
 
-// Edit button listener
-$( '.modal-content' ).on('click', '.edit-btn', function(e) {
-  e.preventDefault();
-  addStep();
-  addProduct();
-  addColortheme();
-  $('.look-info').addClass('hide');
-  $('.edit-info').removeClass('hide');
-  $('.edit-info').html(displayEditForm(activeLook));
-});
+// // Edit button listener
+// $( '.modal-content' ).on('click', '.edit-btn', function(e) {
+//   e.preventDefault();
+//   addStep();
+//   addProduct();
+//   addColortheme();
+//   $('.look-info').addClass('hide');
+//   $('.edit-info').removeClass('hide');
+//   $('.edit-info').html(displayEditForm(activeLook));
+// });
 
 
 //  ******* NAV MENU ********
