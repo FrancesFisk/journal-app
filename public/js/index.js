@@ -57,6 +57,7 @@ function postLogin(user, pw) {
     success: function(data) {
         console.log(data)
         sessionStorage.setItem('authToken', data.authToken);
+        sessionStorage.setItem('username', user);
     },
     error: function(err) {
         console.log(err.responseText);

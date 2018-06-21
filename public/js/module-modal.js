@@ -1,7 +1,11 @@
 $(function() {
 
-let username,
-    files;
+let files,
+    looks,
+    activeLook;
+
+
+//  ********* DISPLAY LIBRARY ************
 
 function loadLibrary() { 
   // Get library of looks
@@ -10,7 +14,8 @@ function loadLibrary() {
     method: "GET",
     success: function(data) {
       console.log("get makeup looks", data);
-      displayMakeupLooks(data);
+      displayAllUsersMakeupLooks(data);
+      displayOneUsersMakeupLooks(data);
     },
     error: function(err) {
       console.log(err.responseText);
@@ -20,7 +25,7 @@ function loadLibrary() {
 };
 loadLibrary();
 
-function displayMakeupLooks(data) {
+function displayAllUsersMakeupLooks(data) {
   let returnHTML = "";
   looks = {};
   let results = data.makeupLooks;
@@ -35,28 +40,28 @@ function displayMakeupLooks(data) {
   $('.public-looks').html(returnHTML);
 };
 
-// get username api protected
-function getUsername() {
-  $.ajax({
-    url: '/api/makeuplooks/returnusername',
-    type: 'POST', 
-    headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
-    success: function(data) {
-      console.log("got username", data);
-      username = data;
-    },
-    error: function(err) {
-      console.log(err.responseText);
-      username = undefined;
+function displayOneUsersMakeupLooks(data) {
+  let returnHTML = "";
+  let results = data.makeupLooks;
+  let username = sessionStorage.getItem('username');
+  results.forEach(function(item) {
+    if(`${item.username}` === username) {
+      returnHTML += 
+      `<div class="thumbnail col-4" data-ref="${item.id}"> 
+        <img src="${item.image}" class="thumbnail-img"> 
+        <div>${item.title}</div>
+      </div>`;
     }
   });
-}
+  $('.user-looks').html(returnHTML);
+};
+
+// ******** MODAL **********
 
 // Open modal listener
 $('body').on('click', '.thumbnail', function(e) {
-  getUsername();
-  let id = $(this).attr("data-ref");
-  activeLook = looks[id];
+  let clickedThumbnailId = $(this).attr("data-ref");
+  activeLook = looks[clickedThumbnailId];
   openModal(activeLook);
 });
 
@@ -77,7 +82,8 @@ function openModal(look) {
 };
 
 function formatLook(look) {
-  let editDelete = (look.username === username)?`<button class="edit-btn" data-ref="${look.id}">Edit</button>
+  console.log("look", look);
+  let editDelete = (look.username === sessionStorage.getItem('username'))?`<button class="edit-btn" data-ref="${look.id}">Edit</button>
   <button class="delete-btn" data-ref="${look.id}">Delete</button> ` : ``;
   let steps = "";
   let products = "";
@@ -345,12 +351,6 @@ function displayEditForm(look) {
       </form>`
   
     };
-
-function editLook() {
-  // get id of look
-  // grab values from form
-  // input values to PUT request
-}
 
 function displayEditForm(look) {
   let stepsArray = look.steps[0].split(",");
