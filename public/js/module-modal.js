@@ -1,6 +1,7 @@
 $(function() {
 
-let username;
+let username,
+    files;
 
 function loadLibrary() { 
   // Get library of looks
@@ -43,7 +44,6 @@ function getUsername() {
     success: function(data) {
       console.log("got username", data);
       username = data;
-      return
     },
     error: function(err) {
       console.log(err.responseText);
@@ -345,6 +345,101 @@ function displayEditForm(look) {
       </form>`
   
     };
+
+function editLook() {
+  // get id of look
+  // grab values from form
+  // input values to PUT request
+}
+
+function displayEditForm(look) {
+  let stepsArray = look.steps[0].split(",");
+  let productsArray = look.products[0].split(",");
+  let colorthemesArray = look.colortheme[0].split(",");
+
+  let skinTypeOptions = "";
+  ['oily', 'dry', 'combination', 'normal'].forEach(item => {
+    if(look.skintype === item) {
+      skinTypeOptions+= `<option selected>${item}</option>`
+    } else {
+      skinTypeOptions+= `<option>${item}</option>`
+    };
+  });
+
+  let steps = "";
+  if (!look.steps) {
+    steps = `<input type="text" name="step_1" class="step"/><br/>`;
+  } else {
+    stepsArray.forEach((step, index) => {
+      let stepNumber = index +1;
+      if(index === 0) {
+        steps = `<input type="text" name="step_1" class="step" value="${step}"/><br/>`;
+      } else {
+        steps+= `<div><input type="text" name="step_${stepNumber}" class="step multiple-fields-option" value="${step}"/>
+        <button class="delete-field">&times;</button></div>`
+      };
+    });
+  };
+
+  let products = "";
+  if (!look.products) {
+    products = `<input type="text" name="product_1" class="product"/><br/>`;
+  } else {
+    productsArray.forEach((product, index) => {
+      let productNumber = index +1;
+      if(index === 0) {
+        products = `<input type="text" name="product_1" class="product" value="${product}"/><br/>`;
+      } else {
+        products+= `<div><input type="text" name="product_${productNumber}" class="product multiple-fields-option" value="${product}"/>
+        <button class="delete-field">&times;</button></div>`
+      };
+    });
+  };
+
+  let colorthemes = "";
+  if (!look.colortheme) {
+    colorthemes = `<input type="text" name="colortheme_1" class="product"/><br/>`;
+  } else {
+    colorthemesArray.forEach((colortheme, index) => {
+      let colorthemeNumber = index +1;
+      if(index === 0) {
+        colorthemes = `<input type="text" name="colortheme_1" class="colortheme" value="${colortheme}"/><br/>`;
+      } else {
+        colorthemes+= `<div><input type="text" name="colortheme_${colorthemeNumber}" class="colortheme multiple-fields-option" value="${colortheme}"/>
+        <button class="delete-field">&times;</button></div>`
+      };
+    });
+  };
+
+  return `<form id="edit-look-form" enctype="multipart/form-data">
+          <input type="file" id="edit-file-uploader" name="image"/><br/>
+          <label for="title">Title</label><br/>
+          <input type="text" name="title" value="${look.title}" required/><br/>
+          <input type="hidden" name="id" value="${look.id}"/>
+          <div class="steps">
+          <label for="steps">Steps</label>
+            <br/>${steps}
+          </div>
+          <button class="small italic add-step">Add another step</button>
+          <div class="products">
+            <label for="products">Products</label>
+            <br/>${products}
+          </div>
+          <button class="small italic add-product">Add another product</button>
+          <select id="edit-select-skintype">
+            <option>Select skintype</option>
+            ${skinTypeOptions}
+          </select>
+          <div class="colorthemes">
+            <label for="colorthemes">Color Themes</label>
+            <br/>${colorthemes}
+          </div>
+          <button class="small italic add-colortheme">Add another color theme</button>
+          <button type="submit" class="edit-look-btn">Submit</button>
+          <button type="button" class="cancel-edit">Cancel</button>
+      </form>`
+  
+};
 
 
 function addStep() {
