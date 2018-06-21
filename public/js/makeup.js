@@ -10,7 +10,6 @@ function prepareUpload (event) { files = event.target.files; }
 // ****** LOAD PAGE ******
 function loadPage() {
   authorizeProtectedPg();
-  // loadLibrary();
 };
 
 loadPage();

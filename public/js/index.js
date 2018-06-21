@@ -16,14 +16,12 @@ function userRegistration() {
     // const usernameField = $(event.currentTarget).find('.new-username');
     const newUsername = $('.new-username').val();
     const newPassword = $('.new-password').val();
-    console.log(newUsername, newPassword);
     postUserRegistration(newUsername, newPassword);
 }
 
 function userLogin() {
   const newUsername = $('.existing-username').val();
   const newPassword = $('.existing-password').val();
-  console.log(newUsername, newPassword);
   postLogin(newUsername, newPassword);
 }
 
@@ -37,7 +35,7 @@ function postUserRegistration(user, pw) {
         password: `${pw}`
     },
     success: function(data) {
-        console.log(data)
+        console.log("PostUserRegistration", data)
     },
     error: function(err) {
         console.log(err.responseText);
@@ -55,7 +53,7 @@ function postLogin(user, pw) {
         password: `${pw}`
     },
     success: function(data) {
-        console.log(data)
+        console.log("postLogin", data)
         sessionStorage.setItem('authToken', data.authToken);
         sessionStorage.setItem('username', user);
     },
@@ -80,7 +78,6 @@ function loadLibrary() {
     url: "/api/makeuplooks",
     method: "GET",
     success: function(data) {
-      console.log("get makeup looks", data);
       displayMakeupLooks(data);
     },
     error: function(err) {
@@ -108,7 +105,6 @@ function displayMakeupLooks(data) {
 // Logout 
 $('.logout-form').submit(function(e) {
   e.preventDefault();
-  console.log("logging out");
   // Remove saved data from sessionStorage
   sessionStorage.clear();
   // if in makeup.html, force user back to index.html

@@ -40,7 +40,7 @@ header {
 }
 
 .sign-in-forms {
-  background-image: linear-gradient(-225deg, #E3FDF5 35%, #FFE6FA 70%);
+  background: white;
   box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
   padding: 10px;
   margin: 25px 10px;
