@@ -441,7 +441,6 @@ function displayEditForm(look) {
   
 };
 
-
 function addStep() {
   $('.edit-info').on('click', '.add-step', function(e) {
     e.preventDefault();

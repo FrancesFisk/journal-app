@@ -108,6 +108,7 @@ function displayMakeupLooks(data) {
 // Logout 
 $('.logout-form').submit(function(e) {
   e.preventDefault();
+  console.log("logging out");
   // Remove saved data from sessionStorage
   sessionStorage.clear();
   // if in makeup.html, force user back to index.html
