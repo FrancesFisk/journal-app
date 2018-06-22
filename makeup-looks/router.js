@@ -40,8 +40,10 @@ router.post('/create', jwtAuth, (req, res) => {
 
   form.parse(req, function(err, fields, files) {
     console.log(fields, files);
+    console.log("files", files);
     let object;
     if (Object.keys(files).length > 0) {
+      console.log("if files > 0");
       let oldpath = files['0'].path; 
       let newpath = './public/images/' + files['0'].name;
       let imageUrl = `/images/${files['0'].name}`;
@@ -59,7 +61,7 @@ router.post('/create', jwtAuth, (req, res) => {
         products: fields.products,
         skintype: fields.skintype,
         colortheme: fields.colortheme
-      }
+      };
     } else {
       object = {
         image: '/images/makeitup-logo.png',
@@ -121,12 +123,26 @@ router.put('/update', jwtAuth, (req, res) => {
       .findByIdAndUpdate(fields.id, object, {new: true})
       .then(newLook => {
         res.json(newLook.serialize());
+
       })
       .catch(error => {
         res.send(error);
       })
     console.log(req.body);
   })
+})
+
+router.get('/:id', (req, res) => {
+  MakeupLook
+    .findById(req.params.id)
+    .then(newLook => {
+      res.json(newLook.serialize());
+      console.log("get edit worked");
+    })
+    .catch(err => {
+      res.status(500).json({message: "Internal server error"});
+    }
+  )
 })
 
 router.delete('/:id', (req, res) => {
