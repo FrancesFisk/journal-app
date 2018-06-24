@@ -70,6 +70,27 @@ function loadPage() {
 
 loadPage();
 
+// ****** REGISTRATION BUTTONS ******
+
+// Open popup listener
+$('.signup-popup-btn').click(function() {
+  $('.popup-signup').show();
+});
+
+// Close popup listener
+$('.popup').on('click', '.close', function(e) {
+  $('.popup-signup').hide();
+});
+
+$('.login-popup-btn').click(function() {
+  $('.popup-login').show();
+});
+
+// Close popup listener
+$('.popup').on('click', '.close', function(e) {
+  $('.popup-login').hide();
+});
+
 
 // ****** DISPLAY THE LIBRARY ******
 function loadLibrary() { 
