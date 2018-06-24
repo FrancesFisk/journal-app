@@ -75,7 +75,10 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=step_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      stepsArray.push(inputField.val());
+      // prevent commas from creating new inputs
+      let inputFieldValue = inputField.val();
+      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
+      stepsArray.push(inputFieldValue);
     }
   }
 
@@ -83,7 +86,10 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=product_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      productsArray.push(inputField.val());
+      // prevent commas from creating new inputs
+      let inputFieldValue = inputField.val();
+      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
+      productsArray.push(inputFieldValue);
     }
   }
 
@@ -91,7 +97,10 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=colortheme_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      colorthemesArray.push(inputField.val());
+      // prevent commas from creating new inputs
+      let inputFieldValue = inputField.val();
+      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
+      colorthemesArray.push(inputFieldValue);
     }
   }
 
@@ -280,7 +289,7 @@ function deleteLook(look, callback) {
 };
 
 // ****** EDIT A LOOK ******
-
+// prevent commas from creating new input fields
 // Submit edits 
 $('body').on('submit', '#edit-look-form', function(e) {
   e.preventDefault();
@@ -296,7 +305,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
     let inputField = $(`#edit-look-form input[name=step_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // stepsArray.map(str => str.replace(/,/g, '&#44;'));
+      // prevent commas from creating new inputs
       let inputFieldValue = inputField.val();
       inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
       stepsArray.push(inputFieldValue);
@@ -307,7 +316,10 @@ $('body').on('submit', '#edit-look-form', function(e) {
     let inputField = $(`#edit-look-form input[name=product_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      productsArray.push(inputField.val());
+      // prevent commas from creating new inputs
+      let inputFieldValue = inputField.val();
+      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
+      productsArray.push(inputFieldValue);
     }
   }
 
@@ -315,7 +327,10 @@ $('body').on('submit', '#edit-look-form', function(e) {
     let inputField = $(`#edit-look-form input[name=colortheme_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      colorthemesArray.push(inputField.val());
+      // prevent commas from creating new inputs
+      let inputFieldValue = inputField.val();
+      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
+      colorthemesArray.push(inputFieldValue);
     }
   }
 
