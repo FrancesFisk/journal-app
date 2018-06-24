@@ -90,7 +90,8 @@ router.put('/update', jwtAuth, (req, res) => {
   let form = new formidable.IncomingForm();
 
   form.parse(req, function(err, fields, files) {
-    console.log(fields, files);
+    console.log("fields:", fields);
+    console.log("files", files);
     let object;
     if (Object.keys(files).length > 0) {
       let oldpath = files['0'].path; 

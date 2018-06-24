@@ -192,20 +192,6 @@ $('body').on('click', '.thumbnail', function(e) {
   let clickedThumbnailId = $(this).attr("data-ref");
   activeLook = looks[clickedThumbnailId];
   openModal(activeLook);
-  // $.ajax({
-  //   url: `/api/makeuplooks/${clickedThumbnailId}`,
-  //   type: "GET",
-  //   cache: false,
-  //   contentType: false,
-  //   headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
-  //   success: function(data) {
-  //     console.log("Makeup look updated: ", data);
-  //     openModal(data);
-  //   },
-  //   error: function(err) {
-  //     console.log(err.responseText);
-  //   }
-  // });
 });
 
 // Close modal listener
@@ -294,6 +280,7 @@ function deleteLook(look, callback) {
 // Submit edits 
 $('body').on('submit', '#edit-look-form', function(e) {
   e.preventDefault();
+
   let stepsArray = [];
   let productsArray = [];
   let colorthemesArray =[];
