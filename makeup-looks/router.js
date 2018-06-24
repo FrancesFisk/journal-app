@@ -132,19 +132,6 @@ router.put('/update', jwtAuth, (req, res) => {
   })
 })
 
-router.get('/:id', (req, res) => {
-  MakeupLook
-    .findById(req.params.id)
-    .then(newLook => {
-      res.json(newLook.serialize());
-      console.log("get edit worked");
-    })
-    .catch(err => {
-      res.status(500).json({message: "Internal server error"});
-    }
-  )
-})
-
 router.delete('/:id', (req, res) => {
   MakeupLook
     .findByIdAndRemove(req.params.id)

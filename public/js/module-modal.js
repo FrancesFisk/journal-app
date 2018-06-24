@@ -191,20 +191,21 @@ $('.create-look').on('click', '.delete-field', function(e) {
 $('body').on('click', '.thumbnail', function(e) {
   let clickedThumbnailId = $(this).attr("data-ref");
   activeLook = looks[clickedThumbnailId];
-  $.ajax({
-    url: `/api/makeuplooks/${clickedThumbnailId}`,
-    type: "GET",
-    cache: false,
-    contentType: false,
-    headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
-    success: function(data) {
-      console.log("Makeup look updated: ", data);
-      openModal(data);
-    },
-    error: function(err) {
-      console.log(err.responseText);
-    }
-  });
+  openModal(activeLook);
+  // $.ajax({
+  //   url: `/api/makeuplooks/${clickedThumbnailId}`,
+  //   type: "GET",
+  //   cache: false,
+  //   contentType: false,
+  //   headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
+  //   success: function(data) {
+  //     console.log("Makeup look updated: ", data);
+  //     openModal(data);
+  //   },
+  //   error: function(err) {
+  //     console.log(err.responseText);
+  //   }
+  // });
 });
 
 // Close modal listener
@@ -367,10 +368,15 @@ $('body').on('submit', '#edit-look-form', function(e) {
     contentType: false,
     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
     success: function(data) {
-      console.log("Makeup look updated: ", data, data.title);
-      console.log(`.title-${data.id}`);
-      $(`.title-${data.id}`).html(data.title);
-      $(`img.thumbnail-${data.id}`).attr('src', data.image);
+      console.log("Makeup look updated: ", data);
+      // remove it from the public and user library
+      $(`div[data-ref=${data.id}]`).remove();
+      // add to looks object
+      looks[data.id] = data;
+      // add it to the public library
+      $('.public-looks').append(makeThumbnail(data));
+      // // add it to the user library
+      $('.user-looks').append(makeThumbnail(data));
     },
     error: function(err) {
       console.log(err.responseText);
