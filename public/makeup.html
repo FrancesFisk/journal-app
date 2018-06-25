@@ -38,8 +38,8 @@
         </nav> -->
         <main class="content">
           <section class="create-look">
-            <h3>Create a Look</h3>
               <form id="create-look-form" enctype="multipart/form-data">
+                <legend>Create a Look</legend>
                 <div>
                   <label for="file">Upload a picture</label><br/>
                   <input type="file" name="image" class="image-upload"/>
@@ -58,13 +58,16 @@
                   <input type="text" name="product_1"/>
                 </div>
                 <button class="small italic add-product">Add another product</button>
-                <select id="select-skintype">
-                  <option>Select skintype</option>
-                  <option>oily</option>
-                  <option>dry</option>
-                  <option>combination</option>
-                  <option>normal</option>
-                </select><br/>
+                <div class="skintype">
+                  <label for="skintype">Skin Type</label>
+                  <select id="select-skintype">
+                    <option>Select skintype</option>
+                    <option>oily</option>
+                    <option>dry</option>
+                    <option>combination</option>
+                    <option>normal</option>
+                  </select>
+                </div>
                 <div class="colorthemes">
                   <label for="colorthemes">Color Theme</label><br/>
                   <input type="text" name="colortheme_1"/><br/>
