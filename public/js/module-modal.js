@@ -55,9 +55,11 @@ function displayOneUsersMakeupLooks(data) {
 };
 
 function makeThumbnail(item) {
- return `<div class="thumbnail col-4" data-ref="${item.id}"> 
-  <img src="${item.image}" class="thumbnail-img thumbnail-${item.id}"> 
-  <div class="title-${item.id}">${item.title}</div>
+ return `<div class="thumbnail col-4" data-ref="${item.id}">
+    <div class="thumbnail-content"> 
+      <img src="${item.image}" class="thumbnail-img thumbnail-${item.id}"> 
+      <div class="title-${item.id}">${item.title}</div>
+    </div>
   </div>`;
 };
 

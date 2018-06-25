@@ -266,8 +266,23 @@ input {
   height: 20px;
 }
 
+.thumbnail {
+  text-align: center;
+}
+
+.thumbnail-content {
+  margin: 10px;
+  padding: 5px;
+}
+
 .thumbnail-img {
   height: 200px;
+  width: 200px;
+  object-fit: scale-down;
+}
+
+.thumbnail-content div {
+  font-family: 'Montserrat', sans-serif;
 }
 
 .modal {
@@ -289,6 +304,12 @@ input {
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.look-info img {
+  width: 200px;
+  height: 200px;
+  object-fit: scale-down;
 }
 
 .close {
