@@ -366,6 +366,10 @@ $('body').on('submit', '#edit-look-form', function(e) {
       $('.public-looks').append(makeThumbnail(data));
       // // add it to the user library
       $('.user-looks').append(makeThumbnail(data));
+      // close modal
+      $('.modal').hide();
+      $('.look-info').removeClass('hide');
+      $('.edit-info').addClass('hide');
     },
     error: function(err) {
       console.log(err.responseText);

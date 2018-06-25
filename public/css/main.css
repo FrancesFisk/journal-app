@@ -253,6 +253,12 @@ i {
   margin: 15px;
 }
 
+.create-look h3 {
+  text-align: center;
+  font-weight: 100;
+  font-family: 'Montserrat', sans-serif;
+}
+
 #create-look-form {
   padding: 40px;
   font-family: 'Montserrat', sans-serif;
@@ -260,16 +266,41 @@ i {
   border: 1px solid darkgray;
 }
 
+.image-upload {
+  height: 150px;
+  width: 150px;
+  background: lightgray;
+  border: none;
+  font-size: 10px;
+}
+
 form {
   font-size: 16px;
 }
 
 input {
-  height: 20px;
+  height: 25px;
   margin: 15px 0;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: 1px solid gray;
+  height: 25px;
+  margin: 15px 0;
+  border: 1px solid gray;
+  font-size: 18px;
+  width: 80%;
+}
+
+#create-look-form .add-step,
+#create-look-form .add-product,
+#create-look-form .add-colortheme {
+  margin: 5px 0;
+  padding: 2px 5px;
+  font-size: 12px;
+  box-shadow: none;
+}
+
+#create-look-form .delete-field {
+  margin: 0;
+  padding: 0;
 }
 
 .add-link {
@@ -286,6 +317,7 @@ input {
   display: block;
   margin: 5px 0;
   height: 20px;
+  border: 1px solid gray;
 }
 
 .submit-look-btn {
