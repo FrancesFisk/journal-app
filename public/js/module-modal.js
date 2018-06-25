@@ -11,7 +11,31 @@ let files,
 $('input[type=file]').on('change', prepareUpload); 
 function prepareUpload (event) { files = event.target.files; }
 
-//  ********* DISPLAY LIBRARY ************
+// ********** HOMEPAGE BUTTONS *************
+$('.show-create-look').click(function() {
+  $('.create-look').show();
+  $('.homepage-buttons').hide();
+});
+
+$('.show-user-looks').click(function() {
+  $('.user-looks-area').removeClass('hide');
+  $('.homepage-buttons').hide();
+});
+
+$('.show-public-looks').click(function() {
+  $('.public-looks-area').show();
+  $('.homepage-buttons').hide();
+});
+
+$('.logo').click(function() {
+  console.log("logo clicked");
+  $('.homepage-buttons').show();
+  $('.create-look').hide();
+  $('.user-looks-area').hide();
+  $('.public-looks-area').hide();
+})
+
+//  ********* DISPLAY LOOKS THUMBNAILS  ************
 
 function loadLibrary() { 
   // Get library of looks

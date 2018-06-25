@@ -37,7 +37,12 @@
           </ul>
         </nav> -->
         <main class="content">
-          <section class="create-look">
+          <div class="homepage-buttons row">
+            <button class="show-create-look col-4">Create a Look</button>
+            <button class="show-user-looks col-4">Your Looks</button>
+            <button class="show-public-looks col-4">Community Looks</button>
+          </div>
+          <section class="create-look hide">
               <form id="create-look-form" enctype="multipart/form-data">
                 <legend>Create a Look</legend>
                 <div>
@@ -76,11 +81,15 @@
                 <button type="submit" class="submit-look-btn">Submit</button>
               </form>
           </section>
-          <h2>Looks you've created</h2>
-          <section class="user-looks">
+          <section class="user-looks-area hide">
+            <h2>Looks you've created</h2>
+            <div class="user-looks">
+            </div>
           </section>
-          <h2>Community Looks</h2>
-          <section class="public-looks">
+          <section class="public-looks-area hide">
+            <h2>Community Looks</h2>
+            <div class="public-looks">
+            </div>
           </section>
         </main> 
     </section>

@@ -225,9 +225,7 @@ a:hover {
 
 .content {
   width: 90%;
-  max-width: 760px;
   margin: 0px auto;
-  padding: 20px;
 }
 
 i {
@@ -248,6 +246,26 @@ i {
 }
 
 /* ******** NAV MENU END *********** */
+
+/* ******* HOMEPAGE BUTTONS ******/
+
+.homepage-buttons {
+  padding-left: 0;
+  padding-right: 0;
+}
+.homepage-buttons button {
+  margin: 0;
+  height: 200px;
+  font-size: 25px;
+  font-style: italic;
+}
+
+.homepage-buttons button:hover {
+  background: lightpink;
+  color: black;
+}
+
+/* HOMEPAGE BUTTONS END */
 
 .logo {
   width: 95%;
