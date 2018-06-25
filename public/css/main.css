@@ -6,6 +6,7 @@
 body {
   background: white;
   margin: 40px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .login-pg {
@@ -195,8 +196,9 @@ main {
 }
 
 h2 {
-  font-size: 55px;
+  font-size: 40px;
   text-align: center;
+  clear: both;
 }
 
 /* ### GENERAL CONTENT STYLES ### */
@@ -370,6 +372,10 @@ input {
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.look-info ul {
+  list-style-type: none;
 }
 
 .look-info img {

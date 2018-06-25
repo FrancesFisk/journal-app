@@ -111,6 +111,7 @@ $('#create-look-form').submit(function(e) {
     skinType = "N/A";
   }
 
+
   // Remove falsy values from arrays
   stepsArray = stepsArray.filter(Boolean);
   productsArray = productsArray.filter(Boolean);
@@ -237,13 +238,13 @@ function formatLook(look) {
   return `<div>
     <img src="${look.image}"/>
     <h3>${look.title}</h3>
-    <h4>Steps</h4>
+    <h4>Steps:</h4>
     <ol>${steps}</ol>
-    <h4>Products</h4>
+    <h4>Products:</h4>
     <ul>${products}</ul>
-    <h4>Skin Type</h4>
+    <h4>Skin Type:</h4>
     <p>${look.skintype}</p>
-    <h4>Color Themes</h4>
+    <h4>Color Themes:</h4>
     <ul>${colorthemes}</ul>
     ${editDelete}
   </div>`
