@@ -124,7 +124,8 @@ function displayMakeupLooks(data) {
 };
 
 // Logout 
-$('.logout-form').submit(function(e) {
+$('.logout-area').click(function(e) {
+  console.log("logging out");
   e.preventDefault();
   // Remove saved data from sessionStorage
   sessionStorage.clear();

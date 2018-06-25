@@ -57,9 +57,13 @@ header {
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
+.popup-content fieldset {
+  border: 1px solid pink;
+  font-family: 'Montserrat', sans-serif;
+}
+
 .sign-in-area {
   background: white;
-  box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
   padding: 10px;
   margin: 25px 10px;
 }
@@ -76,6 +80,7 @@ header {
 .sign-in-area input {
   margin: 7px 0;
   height: 30px;
+  border: 1px solid black;
 }
 
 .hide {
@@ -86,15 +91,30 @@ header {
   font-size:12px;
 }
 
-.demo-account {
+.logout-area {
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
 }
 
-.demo-btn {
-  border: 1px solid black;
-  background: none;
-  margin-left: 5px;
+/* .logout-btn, .signup-popup-btn, .login-popup-btn {
+  font-size: 17px;
+  background: black;
+  color: white;
+  margin: 10px;
+  padding: 5px 15px;
+  -webkit-box-shadow: -4px 6px 10px 0px rgba(186,180,186,1);
+  -moz-box-shadow: -4px 6px 10px 0px rgba(186,180,186,1);
+  box-shadow: -1px 1px 10px 0px rgba(186,180,186,1);
+} */
+
+button {
+  font-size: 17px;
+  background: black;
+  color: white;
+  margin: 10px;
+  padding: 5px 15px;
+  -webkit-box-shadow: -4px 6px 10px 0px rgba(186,180,186,1);
+  -moz-box-shadow: -4px 6px 10px 0px rgba(186,180,186,1);
+  box-shadow: -1px 1px 10px 0px rgba(186,180,186,1);
 }
 
 main {
