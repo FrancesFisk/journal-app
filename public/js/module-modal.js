@@ -11,24 +11,29 @@ let files,
 $('input[type=file]').on('change', prepareUpload); 
 function prepareUpload (event) { files = event.target.files; }
 
-// ********** HOMEPAGE BUTTONS *************
+// ********** HOMEPAGE BUTTONS AND NAVIGATION *************
 $('.show-create-look').click(function() {
   $('.create-look').show();
+  $('.user-looks-area').hide();
+  $('.public-looks-area').hide();
   $('.homepage-buttons').hide();
 });
 
 $('.show-user-looks').click(function() {
-  $('.user-looks-area').removeClass('hide');
+  $('.user-looks-area').show();
+  $('.create-look').hide();
+  $('.public-looks-area').hide();
   $('.homepage-buttons').hide();
 });
 
 $('.show-public-looks').click(function() {
   $('.public-looks-area').show();
+  $('.create-look').hide();
+  $('.user-looks-area').hide();
   $('.homepage-buttons').hide();
 });
 
-$('.logo').click(function() {
-  console.log("logo clicked");
+$('.show-homepage-buttons').click(function() {
   $('.homepage-buttons').show();
   $('.create-look').hide();
   $('.user-looks-area').hide();
