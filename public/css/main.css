@@ -17,6 +17,14 @@ header {
   text-align: center;
 }
 
+header .logout-area {
+  float: right;
+}
+
+header .logout-area button {
+  font-size: 12px;
+}
+
 .login-pg .logo {
   margin: 0;
   width: 60%;

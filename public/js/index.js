@@ -36,6 +36,7 @@ function postUserRegistration(user, pw) {
     },
     success: function(data) {
         console.log("PostUserRegistration", data)
+        window.location = 'makeup.html';
     },
     error: function(err) {
         console.log(err.responseText);
@@ -56,6 +57,7 @@ function postLogin(user, pw) {
         console.log("postLogin", data)
         sessionStorage.setItem('authToken', data.authToken);
         sessionStorage.setItem('username', user);
+        window.location = 'makeup.html';
     },
     error: function(err) {
         console.log(err.responseText);
@@ -103,7 +105,7 @@ function loadLibrary() {
     },
     error: function(err) {
       console.log(err.responseText);
-      window.location = "index.html"
+      // window.location = "index.html"
     }
   });
 };
