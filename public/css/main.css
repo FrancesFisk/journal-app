@@ -26,7 +26,7 @@ header .logout-area button {
   font-size: 12px;
 }
 
-.login-pg .logo {
+.logo {
   margin-left: auto;
   margin-right: auto;
   width: 60%;
@@ -36,6 +36,7 @@ header .logout-area button {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
   clear: both;
+  margin-bottom: 50px;
 }
 
 .app-description {
@@ -273,9 +274,7 @@ i {
 
 /* HOMEPAGE BUTTONS END */
 
-.logo {
-  width: 95%;
-  margin: 15px;
+#site-canvas .logo {
   cursor: pointer;
 }
 
@@ -295,7 +294,7 @@ i {
   font-size: 25px;
 }
 
-#create-look-form div {
+.steps, .products, .skintype, .colorthemes {
   padding-top: 25px;
 }
 
@@ -338,7 +337,7 @@ input {
 
 #create-look-form .delete-field {
   margin: 0;
-  padding: 0;
+  padding: 0 5px;
 }
 
 .add-link {

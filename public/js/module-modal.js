@@ -12,33 +12,50 @@ $('input[type=file]').on('change', prepareUpload);
 function prepareUpload (event) { files = event.target.files; }
 
 // ********** HOMEPAGE BUTTONS AND NAVIGATION *************
+
 $('.show-create-look').click(function() {
+  goToCreateLooks();
+});
+
+$('.show-user-looks').click(function() {
+  goToUserLooks();
+});
+
+$('.show-public-looks').click(function() {
+  goToPublicLooks();
+});
+
+$('.show-homepage-buttons').click(function() {
+  goToHomepage();
+})
+
+function goToCreateLooks() {
   $('.create-look').show();
   $('.user-looks-area').hide();
   $('.public-looks-area').hide();
   $('.homepage-buttons').hide();
-});
+}
 
-$('.show-user-looks').click(function() {
+function goToUserLooks() {
   $('.user-looks-area').show();
   $('.create-look').hide();
   $('.public-looks-area').hide();
   $('.homepage-buttons').hide();
-});
+}
 
-$('.show-public-looks').click(function() {
+function goToPublicLooks() {
   $('.public-looks-area').show();
   $('.create-look').hide();
   $('.user-looks-area').hide();
   $('.homepage-buttons').hide();
-});
+}
 
-$('.show-homepage-buttons').click(function() {
+function goToHomepage() {
   $('.homepage-buttons').show();
   $('.create-look').hide();
   $('.user-looks-area').hide();
   $('.public-looks-area').hide();
-})
+}
 
 //  ********* DISPLAY LOOKS THUMBNAILS  ************
 
@@ -174,6 +191,7 @@ $('#create-look-form').submit(function(e) {
       $('.public-looks').append(makeThumbnail(data));
       // add it to the user library
       $('.user-looks').append(makeThumbnail(data));
+      goToUserLooks();
     },
     error: function(err) {
       console.log(err.responseText);
@@ -245,7 +263,7 @@ function openModal(look) {
 function formatLook(look) {
   console.log("look", look);
   let editDelete = (look.username === sessionStorage.getItem('username'))?`<button class="edit-btn" data-ref="${look.id}">Edit</button>
-  <button class="delete-btn" data-ref="${look.id}">Delete</button> ` : ``;
+  <button class="delete-btn" data-ref="${look.id}">Delete</button>` : ``;
   let steps = "";
   let products = "";
   let colorthemes = "";
@@ -275,7 +293,7 @@ function formatLook(look) {
     <p>${look.skintype}</p>
     <h4>Color Themes:</h4>
     <ul>${colorthemes}</ul>
-    ${editDelete}
+      ${editDelete}
   </div>`
 };
 
@@ -504,7 +522,7 @@ function displayEditForm(look) {
   };
 
   return `<form id="edit-look-form" enctype="multipart/form-data">
-          <input type="file" id="edit-file-uploader" name="image"/><br/>
+          <input type="file" id="edit-file-uploader" name="image" class="image-upload"/><br/>
           <label for="title">Title</label><br/>
           <input type="text" name="title" value="${look.title}" required/><br/>
           <input type="hidden" name="id" value="${look.id}"/>
@@ -526,101 +544,14 @@ function displayEditForm(look) {
             <label for="colorthemes">Color Themes</label>
             <br/>${colorthemes}
           </div>
-          <button class="small italic add-colortheme">Add another color theme</button>
-          <button type="submit" class="edit-look-btn">Submit</button>
-          <button type="button" class="cancel-edit">Cancel</button>
+          <button class="add-colortheme">Add another color theme</button>
+          <div class="submit-cancel-buttons">
+            <button type="submit" class="edit-look-btn">Submit</button>
+            <button type="button" class="cancel-edit">Cancel</button>
+          <div>
       </form>`
   
     };
-
-function displayEditForm(look) {
-  let stepsArray = look.steps[0].split(",");
-  let productsArray = look.products[0].split(",");
-  let colorthemesArray = look.colortheme[0].split(",");
-
-  let skinTypeOptions = "";
-  ['oily', 'dry', 'combination', 'normal'].forEach(item => {
-    if(look.skintype === item) {
-      skinTypeOptions+= `<option selected>${item}</option>`
-    } else {
-      skinTypeOptions+= `<option>${item}</option>`
-    };
-  });
-
-  let steps = "";
-  if (!look.steps) {
-    steps = `<input type="text" name="step_1" class="step"/><br/>`;
-  } else {
-    stepsArray.forEach((step, index) => {
-      let stepNumber = index +1;
-      if(index === 0) {
-        steps = `<input type="text" name="step_1" class="step" value="${step}"/><br/>`;
-      } else {
-        steps+= `<div><input type="text" name="step_${stepNumber}" class="step multiple-fields-option" value="${step}"/>
-        <button class="delete-field">&times;</button></div>`
-      };
-    });
-  };
-
-  let products = "";
-  if (!look.products) {
-    products = `<input type="text" name="product_1" class="product"/><br/>`;
-  } else {
-    productsArray.forEach((product, index) => {
-      let productNumber = index +1;
-      if(index === 0) {
-        products = `<input type="text" name="product_1" class="product" value="${product}"/><br/>`;
-      } else {
-        products+= `<div><input type="text" name="product_${productNumber}" class="product multiple-fields-option" value="${product}"/>
-        <button class="delete-field">&times;</button></div>`
-      };
-    });
-  };
-
-  let colorthemes = "";
-  if (!look.colortheme) {
-    colorthemes = `<input type="text" name="colortheme_1" class="product"/><br/>`;
-  } else {
-    colorthemesArray.forEach((colortheme, index) => {
-      let colorthemeNumber = index +1;
-      if(index === 0) {
-        colorthemes = `<input type="text" name="colortheme_1" class="colortheme" value="${colortheme}"/><br/>`;
-      } else {
-        colorthemes+= `<div><input type="text" name="colortheme_${colorthemeNumber}" class="colortheme multiple-fields-option" value="${colortheme}"/>
-        <button class="delete-field">&times;</button></div>`
-      };
-    });
-  };
-
-  return `<form id="edit-look-form" enctype="multipart/form-data">
-          <input type="file" id="edit-file-uploader" name="image"/><br/>
-          <label for="title">Title</label><br/>
-          <input type="text" name="title" value="${look.title}" required/><br/>
-          <input type="hidden" name="id" value="${look.id}"/>
-          <div class="steps">
-          <label for="steps">Steps</label>
-            <br/>${steps}
-          </div>
-          <button class="small italic add-step">Add another step</button>
-          <div class="products">
-            <label for="products">Products</label>
-            <br/>${products}
-          </div>
-          <button class="small italic add-product">Add another product</button>
-          <select id="edit-select-skintype">
-            <option>Select skintype</option>
-            ${skinTypeOptions}
-          </select>
-          <div class="colorthemes">
-            <label for="colorthemes">Color Themes</label>
-            <br/>${colorthemes}
-          </div>
-          <button class="small italic add-colortheme">Add another color theme</button>
-          <button type="submit" class="edit-look-btn">Submit</button>
-          <button type="button" class="cancel-edit">Cancel</button>
-      </form>`
-  
-};
 
 function addStep() {
   $('.edit-info').on('click', '.add-step', function(e) {
