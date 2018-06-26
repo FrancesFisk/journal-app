@@ -373,10 +373,20 @@ input {
 }
 
 .thumbnail-img {
+  background-size: cover;
   height: 200px;
   width: 200px;
-  object-fit: scale-down;
+  background-position: center center;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
 }
+
+/* .thumbnail-img {
+  height:200px;
+  width: 200px;
+  object-fit: scale-down;
+} */
 
 .thumbnail-content div {
   font-family: 'Montserrat', sans-serif;
@@ -411,6 +421,13 @@ input {
   width: 200px;
   height: 200px;
   object-fit: scale-down;
+}
+
+.look-info h4 {
+  font-weight: bold;
+}
+.look-info p {
+  padding-left: 40px;
 }
 
 .close {

@@ -8,7 +8,8 @@ let files,
     colorthemes = 1;
 
 // Handle image files
-$('input[type=file]').on('change', prepareUpload); 
+$('body').on('change', '#edit-file-uploader', prepareUpload); 
+$('body').on('change', '#create-look-uploader', prepareUpload);
 function prepareUpload (event) { files = event.target.files; }
 
 // ********** HOMEPAGE BUTTONS AND NAVIGATION *************
@@ -100,14 +101,23 @@ function displayOneUsersMakeupLooks(data) {
   $('.user-looks').html(returnHTML);
 };
 
+// function makeThumbnail(item) {
+//  return `<div class="thumbnail col-4" data-ref="${item.id}">
+//     <div class="thumbnail-content"> 
+//       <img src="${item.image}" class="thumbnail-img thumbnail-${item.id}"> 
+//       <div class="title-${item.id}">${item.title}</div>
+//     </div>
+//   </div>`;
+// };
+
 function makeThumbnail(item) {
- return `<div class="thumbnail col-4" data-ref="${item.id}">
-    <div class="thumbnail-content"> 
-      <img src="${item.image}" class="thumbnail-img thumbnail-${item.id}"> 
-      <div class="title-${item.id}">${item.title}</div>
-    </div>
-  </div>`;
-};
+  return `<div class="thumbnail col-4" data-ref="${item.id}">
+     <div class="thumbnail-content"> 
+       <div style= "background-image: url(${item.image});" class="thumbnail-img thumbnail-${item.id}"> </div>
+       <div class="title-${item.id}"=>${item.title}</div>
+     </div>
+   </div>`;
+ };
 
 // ******* CREATE LOOK *********
 
@@ -326,7 +336,7 @@ function deleteLook(look, callback) {
 };
 
 // ****** EDIT A LOOK ******
-// prevent commas from creating new input fields
+
 // Submit edits 
 $('body').on('submit', '#edit-look-form', function(e) {
   e.preventDefault();
@@ -425,37 +435,6 @@ $('body').on('submit', '#edit-look-form', function(e) {
   });
 });
 
-// Add fields in the create look form
-$('#edit-look-form .add-step').click(e => {
-  e.preventDefault();
-  steps++;
-  let newHTML = `
-    <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
-    <button class="delete-field">&times;</button></div>
-  `;
-  $('.steps').append(newHTML);
-});
-
-$('#edit-look-form .add-product').click(e => {
-  e.preventDefault();
-  products++;
-  let newHTML = `
-    <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
-    <button class="delete-field">&times;</button></div>
-  `;
-  $('.products').append(newHTML);
-});
-
-$('#edit-look-form .add-colortheme').click(e => {
-  e.preventDefault();
-  colorthemes++;
-  let newHTML = `
-    <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
-    <button class="delete-field">&times;</button></div>
-  `;
-  $('.colorthemes').append(newHTML);
-});
-
 // Delete field in the create look form
 $('.create-look').on('click', '.delete-field', function(e) {
   $(this).parent().remove();
@@ -550,7 +529,6 @@ function displayEditForm(look) {
             <button type="button" class="cancel-edit">Cancel</button>
           <div>
       </form>`
-  
     };
 
 function addStep() {
@@ -614,7 +592,6 @@ $( '.modal-content' ).on('click', '.edit-btn', function(e) {
   $('.edit-info').removeClass('hide');
   $('.edit-info').html(displayEditForm(activeLook));
 });
-
 
 
 });
