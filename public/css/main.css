@@ -326,19 +326,33 @@ input {
   width: 80%;
 }
 
-#create-look-form .add-step,
+/* #create-look-form .add-step,
 #create-look-form .add-product,
 #create-look-form .add-colortheme {
   margin: 5px 0;
   padding: 2px 5px;
   font-size: 12px;
   box-shadow: none;
+} */
+
+.add-step,
+.add-product,
+.add-colortheme {
+  margin: 5px 0;
+  padding: 2px 5px;
+  font-size: 12px;
+  box-shadow: none;
 }
 
-#create-look-form .delete-field {
+/* #create-look-form .delete-field {
   margin: 0;
   padding: 0 5px;
-}
+} */
+
+/* .delete-field {
+  margin: 0;
+  padding: 0 5px;
+} */
 
 .add-link {
   background: lightgray;
@@ -350,17 +364,21 @@ input {
   display: inline;
 }
 
-#select-skintype {
+#select-skintype, #edit-select-skintype {
   display: block;
   margin: 16px 0;
-  height: 20px;
+  height: 30px;
   border: 1px solid gray;
-  font-size: 16px;
+  font-size: 17px;
+  background: black;
+  color: white;
 }
 
 .submit-look-btn {
   display: block;
-  margin: 25px 0 0 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
 }
 
 .thumbnail {
@@ -428,6 +446,10 @@ input {
 }
 .look-info p {
   padding-left: 40px;
+}
+
+.submit-cancel-buttons, .edit-delete-buttons {
+  text-align: center;
 }
 
 .close {

@@ -1,9 +1,9 @@
-$(function() {
+// $(function() {
 
-let files,
-  steps = 1,
-  products = 1,
-  colorthemes = 1;
+// let files,
+//   steps = 1,
+//   products = 1,
+//   colorthemes = 1;
 
 // Handle image files
 // $('input[type=file]').on('change', prepareUpload); 
@@ -119,4 +119,4 @@ let files,
 //   $(this).parent().remove();
 // });
 
-});
+// });

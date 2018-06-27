@@ -272,8 +272,8 @@ function openModal(look) {
 
 function formatLook(look) {
   console.log("look", look);
-  let editDelete = (look.username === sessionStorage.getItem('username'))?`<button class="edit-btn" data-ref="${look.id}">Edit</button>
-  <button class="delete-btn" data-ref="${look.id}">Delete</button>` : ``;
+  let editDelete = (look.username === sessionStorage.getItem('username'))?`<div class="edit-delete-buttons"><button class="edit-btn" data-ref="${look.id}">Edit</button>
+  <button class="delete-btn" data-ref="${look.id}">Delete</button></div>` : ``;
   let steps = "";
   let products = "";
   let colorthemes = "";
@@ -303,6 +303,7 @@ function formatLook(look) {
     <p>${look.skintype}</p>
     <h4>Color Themes:</h4>
     <ul>${colorthemes}</ul>
+    <h4>Created by: ${look.username}</h4>
       ${editDelete}
   </div>`
 };
@@ -515,10 +516,13 @@ function displayEditForm(look) {
             <br/>${products}
           </div>
           <button class="small italic add-product">Add another product</button>
-          <select id="edit-select-skintype">
-            <option>Select skintype</option>
-            ${skinTypeOptions}
-          </select>
+          <div class="skintype">
+          <label for="skintype">Skin Type</label>
+            <select id="edit-select-skintype">
+              <option>Select skintype</option>
+              ${skinTypeOptions}
+            </select>
+          </div>
           <div class="colorthemes">
             <label for="colorthemes">Color Themes</label>
             <br/>${colorthemes}
@@ -531,44 +535,46 @@ function displayEditForm(look) {
       </form>`
     };
 
-function addStep() {
-  $('.edit-info').on('click', '.add-step', function(e) {
-    e.preventDefault();
-    let steps = 1;
-    steps++;
-    let newHTML = `
-      <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
-      <button class="delete-field">&times;</button></div>
-    `;
-    $(this).prev().append(newHTML);
-  });
-};
+// add another step in edit form
+$('.edit-info').on('click', '.add-step', function(e) {
+  e.preventDefault();
+  steps = 1;
+  console.log("steps", steps)
+  steps++;
+  console.log("steps again", steps)
+  let newHTML = `
+    <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
+    <button class="delete-field">&times;</button></div>
+  `;
+  console.log("newHTML", newHTML);
+  $('#edit-look-form .steps').append(newHTML);
+});
 
-function addProduct() {
-  $('.edit-info').on('click', '.add-product', e => {
-    e.preventDefault();
-    let products = 1;
-    products++;
-    let newHTML = `
-      <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
-      <button class="delete-field">&times;</button></div>
-    `;
-    $('.products').append(newHTML);
-  });
-};
+// add another product field in edit form
+$('.edit-info').on('click', '.add-product', e => {
+  e.preventDefault();
+  let products = 1;
+  products++;
+  let newHTML = `
+    <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
+    <button class="delete-field">&times;</button></div>
+  `;
+  $('#edit-look-form .products').append(newHTML);
+});
 
-function addColortheme() {
-  $('.edit-info').on('click', '.add-colortheme', e => {
-    e.preventDefault();
-    let colorthemes = 1;
-    colorthemes++;
-    let newHTML = `
-      <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
-      <button class="delete-field">&times;</button></div>
-    `;
-    $('.colorthemes').append(newHTML);
-  });
-};
+
+// add another color theme field in edit form
+$('.edit-info').on('click', '.add-colortheme', e => {
+  e.preventDefault();
+  let colorthemes = 1;
+  colorthemes++;
+  let newHTML = `
+    <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
+    <button class="delete-field">&times;</button></div>
+  `;
+  $('#edit-look-form .colorthemes').append(newHTML);
+});
+
 
 // Delete field in the create look form
 $('.edit-info').on('click', '.delete-field', function(e) {
@@ -585,9 +591,6 @@ $('.modal').on('click', '.cancel-edit', function(e) {
 // Edit button listener
 $( '.modal-content' ).on('click', '.edit-btn', function(e) {
   e.preventDefault();
-  addStep();
-  addProduct();
-  addColortheme();
   $('.look-info').addClass('hide');
   $('.edit-info').removeClass('hide');
   $('.edit-info').html(displayEditForm(activeLook));

@@ -64,7 +64,7 @@ router.post('/create', jwtAuth, (req, res) => {
       };
     } else {
       object = {
-        image: '/images/makeitup-logo.png',
+        image: '/images/makeitup-logo-square.png',
         title: fields.title,
         username: req.user.username,
         steps: fields.steps,
