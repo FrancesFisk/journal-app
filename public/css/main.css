@@ -36,12 +36,25 @@ header .logout-area button {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
   clear: both;
-  margin-bottom: 50px;
+  margin-bottom: 12px;
 }
 
 .app-description {
   font-size: 20px;
   margin: 5px;
+}
+
+.about {
+  width: 80%;
+  margin: 45px auto;
+  font-size: 18px;
+  border: 1px solid gray;
+  padding: 20px;
+  line-height: 25px;
+}
+
+.about p {
+  text-align: center;
 }
 
 .registration-buttons {
@@ -76,8 +89,6 @@ header .logout-area button {
 
 .sign-in-area {
   background: white;
-  padding: 10px;
-  margin: 25px 10px;
 }
 
 .sign-in-area form {
@@ -444,6 +455,7 @@ input {
 .look-info h4 {
   font-weight: bold;
 }
+
 .look-info p {
   padding-left: 40px;
 }
