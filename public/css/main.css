@@ -9,21 +9,26 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-.login-pg {
-  background: none;
-  margin: 20px;
+main {
+  font-size: 16px;
 }
+
+.hide {
+  display: none;
+}
+
+button {
+  font-size: 17px;
+  background: black;
+  color: white;
+  margin: 10px;
+  padding: 5px 15px;
+}
+
+/* ***** HEADER ***** */
 
 header {
   text-align: center;
-}
-
-header .logout-area {
-  float: right;
-}
-
-header .logout-area button {
-  font-size: 12px;
 }
 
 .logo {
@@ -42,6 +47,20 @@ header .logout-area button {
 .app-description {
   font-size: 20px;
   margin: 5px;
+}
+
+/* ***** INDEX.HTML ****** */
+.login-pg {
+  background: none;
+  margin: 20px;
+}
+
+header .logout-area {
+  float: right;
+}
+
+header .logout-area button {
+  font-size: 12px;
 }
 
 .about {
@@ -106,39 +125,12 @@ header .logout-area button {
   border: 1px solid black;
 }
 
-.hide {
-  display: none;
-}
-
 .link-to-app {
   font-size:12px;
 }
 
 .logout-area {
   text-align: center;
-}
-
-/* .logout-btn, .signup-popup-btn, .login-popup-btn {
-  font-size: 17px;
-  background: black;
-  color: white;
-  margin: 10px;
-  padding: 5px 15px;
-  -webkit-box-shadow: -4px 6px 10px 0px rgba(186,180,186,1);
-  -moz-box-shadow: -4px 6px 10px 0px rgba(186,180,186,1);
-  box-shadow: -1px 1px 10px 0px rgba(186,180,186,1);
-} */
-
-button {
-  font-size: 17px;
-  background: black;
-  color: white;
-  margin: 10px;
-  padding: 5px 15px;
-}
-
-main {
-  font-size: 16px;
 }
 
 /* ******** NAV MENU *********** */
@@ -219,17 +211,6 @@ main {
   color: black;
 }
 
-/* ### GENERAL CONTENT STYLES ### */
-/* 
-h1 {
-  font-family: 'Roboto Slab', sans-serif;
-  font-size: 2.25em;
-} */
-
-/* p {
-  font-size: 1.25em;
-} */
-
 a {
   text-decoration: none;
   color: rgba(86, 178, 171, 0.5);
@@ -263,9 +244,18 @@ i {
   color: rgb(86, 178, 171);
 }
 
-/* ******** NAV MENU END *********** */
+/* ****** MAKEUP.HTML ****** */
 
-/* ******* HOMEPAGE BUTTONS ******/
+#site-canvas .logo {
+  cursor: pointer;
+}
+
+.content h2 {
+  text-align: center;
+  font-size: 25px;
+}
+
+/* *** HOMEPAGE BUTTONS ** */
 
 .homepage-buttons {
   padding-left: 0;
@@ -283,16 +273,7 @@ i {
   color: black;
 }
 
-/* HOMEPAGE BUTTONS END */
-
-#site-canvas .logo {
-  cursor: pointer;
-}
-
-.content h2 {
-  text-align: center;
-  font-size: 25px;
-}
+/* *** FORMS *** */
 
 #create-look-form {
   padding: 40px;
@@ -337,15 +318,6 @@ input {
   width: 80%;
 }
 
-/* #create-look-form .add-step,
-#create-look-form .add-product,
-#create-look-form .add-colortheme {
-  margin: 5px 0;
-  padding: 2px 5px;
-  font-size: 12px;
-  box-shadow: none;
-} */
-
 .add-step,
 .add-product,
 .add-colortheme {
@@ -353,22 +325,6 @@ input {
   padding: 2px 5px;
   font-size: 12px;
   box-shadow: none;
-}
-
-/* #create-look-form .delete-field {
-  margin: 0;
-  padding: 0 5px;
-} */
-
-/* .delete-field {
-  margin: 0;
-  padding: 0 5px;
-} */
-
-.add-link {
-  background: lightgray;
-  padding: 3px;
-  border-radius: 5px;
 }
 
 .delete-field {
@@ -392,34 +348,7 @@ input {
   margin-top: 25px;
 }
 
-.thumbnail {
-  text-align: center;
-}
-
-.thumbnail-content {
-  margin: 10px;
-  padding: 5px;
-}
-
-.thumbnail-img {
-  background-size: cover;
-  height: 200px;
-  width: 200px;
-  background-position: center center;
-  margin-left: auto;
-  margin-right: auto;
-  cursor: pointer;
-}
-
-/* .thumbnail-img {
-  height:200px;
-  width: 200px;
-  object-fit: scale-down;
-} */
-
-.thumbnail-content div {
-  font-family: 'Montserrat', sans-serif;
-}
+/* *** MODAL *** */
 
 .modal {
   display: none; /* Hidden by default */
@@ -476,6 +405,31 @@ input {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* *** THUMBNAILS *** */
+
+.thumbnail {
+  text-align: center;
+}
+
+.thumbnail-content {
+  margin: 10px;
+  padding: 5px;
+}
+
+.thumbnail-img {
+  background-size: cover;
+  height: 200px;
+  width: 200px;
+  background-position: center center;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+.thumbnail-content div {
+  font-family: 'Montserrat', sans-serif;
 }
 
 @media only screen and (min-width: 640px) {
