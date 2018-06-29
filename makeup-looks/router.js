@@ -123,7 +123,7 @@ router.put('/update', jwtAuth, (req, res) => {
     return MakeupLook  
       .findByIdAndUpdate(fields.id, object, {new: true})
       .then(newLook => {
-        res.json(newLook.serialize());
+        res.json(newLook.serialize())
 
       })
       .catch(error => {

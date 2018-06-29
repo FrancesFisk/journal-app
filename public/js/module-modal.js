@@ -195,6 +195,7 @@ $('#create-look-form').submit(function(e) {
     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
     success: function(data) {
       console.log("Makeup look created: ", data);
+      file = {};
       // add to looks object
       looks[data.id] = data;
       // add it to the public library
@@ -350,6 +351,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
   let products = $('#edit-look-form .product').length;
   let colorthemes = $('#edit-look-form .colortheme').length;
 
+  console.log("steps", steps);
   for(let i = 1; i <= steps; i++) {
     let inputField = $(`#edit-look-form input[name=step_${i}]`);
     // if it exists on the page
@@ -404,6 +406,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
   data.append("products", productsArray);
   data.append("skintype", skinType);
   data.append("colortheme", colorthemesArray);
+  console.log("data", data);
   
   // API request
   $.ajax({
@@ -417,6 +420,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
     success: function(data) {
       console.log("Makeup look updated: ", data);
+      files = {};
       // remove it from the public and user library
       $(`div[data-ref=${data.id}]`).remove();
       // add to looks object
@@ -538,10 +542,8 @@ function displayEditForm(look) {
 // add another step in edit form
 $('.edit-info').on('click', '.add-step', function(e) {
   e.preventDefault();
-  steps = 1;
-  console.log("steps", steps)
+  let steps = $("#edit-look-form .step").length;
   steps++;
-  console.log("steps again", steps)
   let newHTML = `
     <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
     <button class="delete-field">&times;</button></div>
@@ -553,7 +555,7 @@ $('.edit-info').on('click', '.add-step', function(e) {
 // add another product field in edit form
 $('.edit-info').on('click', '.add-product', e => {
   e.preventDefault();
-  let products = 1;
+  let products = $("#edit-look-form .product").length;
   products++;
   let newHTML = `
     <div><input type="text" name="product_${products}" class="product multiple-fields-option" />
@@ -566,7 +568,7 @@ $('.edit-info').on('click', '.add-product', e => {
 // add another color theme field in edit form
 $('.edit-info').on('click', '.add-colortheme', e => {
   e.preventDefault();
-  let colorthemes = 1;
+  let colorthemes = $("#edit-look-form .colortheme").length;
   colorthemes++;
   let newHTML = `
     <div><input type="text" name="colortheme_${colorthemes}" class="colortheme multiple-fields-option" />
