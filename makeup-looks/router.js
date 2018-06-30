@@ -29,11 +29,6 @@ router.get('/', (req, res) => {
     });
 });
 
-// // return logged in username
-// router.post('/returnusername', jwtAuth, (req, res) => {
-//   res.send(req.user.username);
-// })
-
 router.post('/create', jwtAuth, (req, res) => {
   // take the incoming object and split the image file from the form data
   let form = new formidable.IncomingForm();
@@ -86,6 +81,21 @@ router.post('/create', jwtAuth, (req, res) => {
   })
 })
 
+// POST for testing
+router.post('/create-test', (req, res) => {
+    console.log("req.body", req.body);
+    return MakeupLook  
+      .create(req.body)
+      .then(newLook => {
+        res.json(newLook.serialize());
+      })
+      .catch(error => {
+        res.send(error);
+      })
+    console.log(req.body);
+  })
+// })
+
 router.put('/update', jwtAuth, (req, res) => {
   let form = new formidable.IncomingForm();
 
@@ -131,6 +141,21 @@ router.put('/update', jwtAuth, (req, res) => {
       })
     console.log(req.body);
   })
+})
+
+// PUT for testing
+router.put('/update-test', (req, res) => {
+    console.log("req.body", req.body);
+    return MakeupLook  
+      .findByIdAndUpdate(fields.id, object, {new: true})
+      .then(newLook => {
+        res.json(newLook.serialize())
+
+      })
+      .catch(error => {
+        res.send(error);
+      })
+    console.log(req.body);
 })
 
 router.delete('/:id', (req, res) => {
