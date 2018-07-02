@@ -113,8 +113,6 @@ describe('Makeitup API resources', function() {
         title: faker.lorem.words(),
         steps: [faker.lorem.words()],
       };
-      let test_auth = auth_router.createAuthToken({username: 'testing'})
-      console.log('test_auth for POST', test_auth);
       return chai.request(app)
         .post('/api/makeuplooks/create-test')
         .send(newLook)
@@ -147,8 +145,6 @@ describe('Makeitup API resources', function() {
         title: 'Minimal Makeup',
         steps: ['Apply concealer', 'apply blush']
       };
-      let test_auth = auth_router.createAuthToken({username: 'testing'})
-      console.log('test_auth', test_auth);
       return MakeupLook
         .findOne()
         // assign updateData's id to that existing look's id
