@@ -12,9 +12,9 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 <body>
-  <section id="site-wrapper">
-    <section id="site-canvas">
-        <header>
+  <section role="region" id="site-wrapper">
+    <div id="site-canvas">
+        <header role="banner">
             <div class="logout-area">
                 <button type="button" class="logout-btn">Log out</button>
             </div>
@@ -24,7 +24,7 @@
                 <h3 class="app-description">Create, share and browse makeup looks</h3>
             </div>
           </header>
-        <nav id="site-menu">
+        <nav role="navigation" id="site-menu">
             <section class="site-menu-content">
               <a href="#" class="toggle-nav"><i class="fa fa-times"></i></a>
               <h2 class="show-homepage-buttons toggle-nav">HOME</h2>
@@ -33,16 +33,16 @@
               <h2 class="show-public-looks toggle-nav">COMMUNITY LOOKS</h2>
             </section>
           </nav>
-        <main class="content">
+        <main role="main" class="content">
           <div class="homepage-buttons row">
             <button class="show-create-look col-4">Create a Look</button>
             <button class="show-user-looks col-4">Your Looks</button>
             <button class="show-public-looks col-4">Community Looks</button>
           </div>
-          <section class="create-look hide">
-              <form id="create-look-form" enctype="multipart/form-data">
+          <section role="region" class="create-look hide">
+              <form role="form" id="create-look-form" enctype="multipart/form-data">
                 <legend>Create a Look</legend>
-                <div>
+                <div class="image-file">
                   <label for="file">Upload a picture</label><br/>
                   <input type="file" name="image" id="create-look-uploader" class="image-upload"/>
                 </div>  
@@ -54,12 +54,12 @@
                   <label for="steps">Steps</label><br/>
                   <input type="text" name="step_1" required/><br/>
                 </div>
-                <button class="small italic add-step">Add another step</button>
+                <button class="add-step">Add another step</button>
                 <div class="products">
                   <label for="products">Products</label><br/>
                   <input type="text" name="product_1"/>
                 </div>
-                <button class="small italic add-product">Add another product</button>
+                <button class="add-product">Add another product</button>
                 <div class="skintype">
                   <label for="skintype">Skin Type</label>
                   <select id="select-skintype">
@@ -74,22 +74,22 @@
                   <label for="colorthemes">Color Theme</label><br/>
                   <input type="text" name="colortheme_1"/><br/>
                 </div>
-                <button class="small italic add-colortheme">Add another color theme</button>
+                <button class="add-colortheme">Add another color theme</button>
                 <button type="submit" class="submit-look-btn">Submit</button>
               </form>
           </section>
-          <section class="user-looks-area hide">
+          <section role="region" class="user-looks-area hide">
             <h2>Looks you've created</h2>
             <div class="user-looks">
             </div>
           </section>
-          <section class="public-looks-area hide">
+          <section role="region" class="public-looks-area hide">
             <h2>Community Looks</h2>
             <div class="public-looks">
             </div>
           </section>
         </main> 
-    </section>
+      </div>
   </section>
   <div class="modal">
     <div class="modal-content">

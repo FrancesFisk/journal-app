@@ -54,7 +54,7 @@ function loadLibrary() {
     url: "/api/makeuplooks",
     method: "GET",
     success: function(data) {
-      console.log("get makeup looks", data);
+      console.log("got makeup looks", data);
       displayAllUsersMakeupLooks(data);
       displayOneUsersMakeupLooks(data);
     },
@@ -90,7 +90,7 @@ function displayOneUsersMakeupLooks(data) {
 };
 
 function makeThumbnail(item) {
-  return `<div class="thumbnail col-4" data-ref="${item.id}">
+  return `<div class="thumbnail col-4" data-ref="${item.id}" tabindex="0">
      <div class="thumbnail-content"> 
        <div style= "background-image: url(${item.image});" class="thumbnail-img thumbnail-${item.id}"> </div>
        <div class="title-${item.id}"=>${item.title}</div>
@@ -225,6 +225,15 @@ $('body').on('click', '.thumbnail', function(e) {
   openModal(activeLook);
 });
 
+// Open modal listener on keypress
+$('body').on('keypress', '.thumbnail', function(e) {
+  if(e.which === 13) {
+    let clickedThumbnailId = $(this).attr("data-ref");
+    activeLook = looks[clickedThumbnailId];
+    openModal(activeLook);
+  }
+});
+
 // Close modal listener
 $('.modal').on('click', '.close', function(e) {
   $('.modal').hide();
@@ -242,7 +251,6 @@ function openModal(look) {
 };
 
 function formatLook(look) {
-  console.log("look", look);
   let editDelete = (look.username === sessionStorage.getItem('username'))?`<div class="edit-delete-buttons"><button class="edit-btn" data-ref="${look.id}">Edit</button>
   <button class="delete-btn" data-ref="${look.id}">Delete</button></div>` : ``;
   let steps = "";
@@ -293,7 +301,7 @@ function deleteLook(look, callback) {
   const settings = {
     method: "DELETE",
     success: function() {
-      console.log("Look deleted");
+      console.log("look deleted");
       // remove from local object
       looks[look] = undefined;
       // remove from page
@@ -320,7 +328,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
   let products = $('#edit-look-form .product').length;
   let colorthemes = $('#edit-look-form .colortheme').length;
 
-  console.log("steps", steps);
+  
   for(let i = 1; i <= steps; i++) {
     let inputField = $(`#edit-look-form input[name=step_${i}]`);
     // if it exists on the page
@@ -356,7 +364,6 @@ $('body').on('submit', '#edit-look-form', function(e) {
   colorthemesArray = colorthemesArray.filter(Boolean);
 
   // Compile key/value pairs to send form data
-  console.log("files", files);
   let data = new FormData(); 
   $.each(files, function(key, value) { data.append(key, value); });
   // first argument is the name
@@ -366,7 +373,6 @@ $('body').on('submit', '#edit-look-form', function(e) {
   data.append("products", productsArray);
   data.append("skintype", skinType);
   data.append("colortheme", colorthemesArray);
-  console.log("data", data);
   
   // API request
   $.ajax({
@@ -464,7 +470,7 @@ function displayEditForm(look) {
     });
   };
 
-  return `<form id="edit-look-form" enctype="multipart/form-data">
+  return `<form role="form" id="edit-look-form" enctype="multipart/form-data">
           <input type="file" id="edit-file-uploader" name="image" class="image-upload"/><br/>
           <label for="title">Title</label><br/>
           <input type="text" name="title" value="${look.title}" required/><br/>
@@ -507,7 +513,6 @@ $('.edit-info').on('click', '.add-step', function(e) {
     <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
     <button class="delete-field">&times;</button></div>
   `;
-  console.log("newHTML", newHTML);
   $('#edit-look-form .steps').append(newHTML);
 });
 
