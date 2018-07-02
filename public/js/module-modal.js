@@ -325,10 +325,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
     let inputField = $(`#edit-look-form input[name=step_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      stepsArray.push(inputFieldValue);
+      stepsArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
   
@@ -336,10 +333,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
     let inputField = $(`#edit-look-form input[name=product_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      productsArray.push(inputFieldValue);
+      productsArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -347,10 +341,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
     let inputField = $(`#edit-look-form input[name=colortheme_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      colorthemesArray.push(inputFieldValue);
+      colorthemesArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -396,7 +387,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
       looks[data.id] = data;
       // add it to the public library
       $('.public-looks').append(makeThumbnail(data));
-      // // add it to the user library
+      // add it to the user library
       $('.user-looks').append(makeThumbnail(data));
       // close modal
       $('.modal').hide();
