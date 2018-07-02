@@ -15,7 +15,10 @@ function prepareUpload (event) { files = event.target.files; }
 // ********** HOMEPAGE BUTTONS AND NAVIGATION *************
 
 $('.show-create-look').click(function() {
-  goToCreateLooks();
+  $('.create-look').show();
+  $('.user-looks-area').hide();
+  $('.public-looks-area').hide();
+  $('.homepage-buttons').hide();
 });
 
 $('.show-user-looks').click(function() {
@@ -23,39 +26,24 @@ $('.show-user-looks').click(function() {
 });
 
 $('.show-public-looks').click(function() {
-  goToPublicLooks();
+  $('.public-looks-area').show();
+  $('.create-look').hide();
+  $('.user-looks-area').hide();
+  $('.homepage-buttons').hide();
 });
 
 $('.show-homepage-buttons').click(function() {
-  goToHomepage();
-})
-
-function goToCreateLooks() {
-  $('.create-look').show();
+  $('.homepage-buttons').show();
+  $('.create-look').hide();
   $('.user-looks-area').hide();
   $('.public-looks-area').hide();
-  $('.homepage-buttons').hide();
-}
+})
 
 function goToUserLooks() {
   $('.user-looks-area').show();
   $('.create-look').hide();
   $('.public-looks-area').hide();
   $('.homepage-buttons').hide();
-}
-
-function goToPublicLooks() {
-  $('.public-looks-area').show();
-  $('.create-look').hide();
-  $('.user-looks-area').hide();
-  $('.homepage-buttons').hide();
-}
-
-function goToHomepage() {
-  $('.homepage-buttons').show();
-  $('.create-look').hide();
-  $('.user-looks-area').hide();
-  $('.public-looks-area').hide();
 }
 
 //  ********* DISPLAY LOOKS THUMBNAILS  ************
@@ -101,15 +89,6 @@ function displayOneUsersMakeupLooks(data) {
   $('.user-looks').html(returnHTML);
 };
 
-// function makeThumbnail(item) {
-//  return `<div class="thumbnail col-4" data-ref="${item.id}">
-//     <div class="thumbnail-content"> 
-//       <img src="${item.image}" class="thumbnail-img thumbnail-${item.id}"> 
-//       <div class="title-${item.id}">${item.title}</div>
-//     </div>
-//   </div>`;
-// };
-
 function makeThumbnail(item) {
   return `<div class="thumbnail col-4" data-ref="${item.id}">
      <div class="thumbnail-content"> 
@@ -133,10 +112,8 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=step_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      stepsArray.push(inputFieldValue);
+      // prevent commas from creating new i
+      stepsArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -144,10 +121,7 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=product_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      productsArray.push(inputFieldValue);
+      productsArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -155,10 +129,7 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=colortheme_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      colorthemesArray.push(inputFieldValue);
+      colorthemesArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -166,7 +137,6 @@ $('#create-look-form').submit(function(e) {
   if($('#select-skintype').val() === "Select skintype") {
     skinType = "N/A";
   }
-
 
   // Remove falsy values from arrays
   stepsArray = stepsArray.filter(Boolean);
@@ -283,7 +253,6 @@ function formatLook(look) {
   look.steps.toString().split(",").forEach(step => {
     steps += `<li>${step}</li>`;
   }) ;
- 
   
   look.products.toString().split(",").forEach(product => {
     products += `<li>${product}</li>`;
@@ -445,7 +414,6 @@ $('.create-look').on('click', '.delete-field', function(e) {
   $(this).parent().remove();
 });
 
-
 function displayEditForm(look) {
   let stepsArray = look.steps[0].split(",");
   let productsArray = look.products[0].split(",");
@@ -564,7 +532,6 @@ $('.edit-info').on('click', '.add-product', e => {
   $('#edit-look-form .products').append(newHTML);
 });
 
-
 // add another color theme field in edit form
 $('.edit-info').on('click', '.add-colortheme', e => {
   e.preventDefault();
@@ -576,7 +543,6 @@ $('.edit-info').on('click', '.add-colortheme', e => {
   `;
   $('#edit-look-form .colorthemes').append(newHTML);
 });
-
 
 // Delete field in the create look form
 $('.edit-info').on('click', '.delete-field', function(e) {
@@ -598,5 +564,13 @@ $( '.modal-content' ).on('click', '.edit-btn', function(e) {
   $('.edit-info').html(displayEditForm(activeLook));
 });
 
+// **** FORMS ****
+
+// prevent commas from creating new input fields by replacing commas with HTML entities
+function replaceCommasWithHTMLEntities(input) {
+  let inputFieldValue = input.val();
+  inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
+  return inputFieldValue;
+}
 
 });
