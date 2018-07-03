@@ -15,7 +15,10 @@ function prepareUpload (event) { files = event.target.files; }
 // ********** HOMEPAGE BUTTONS AND NAVIGATION *************
 
 $('.show-create-look').click(function() {
-  goToCreateLooks();
+  $('.create-look').show();
+  $('.user-looks-area').hide();
+  $('.public-looks-area').hide();
+  $('.homepage-buttons').hide();
 });
 
 $('.show-user-looks').click(function() {
@@ -23,39 +26,24 @@ $('.show-user-looks').click(function() {
 });
 
 $('.show-public-looks').click(function() {
-  goToPublicLooks();
+  $('.public-looks-area').show();
+  $('.create-look').hide();
+  $('.user-looks-area').hide();
+  $('.homepage-buttons').hide();
 });
 
 $('.show-homepage-buttons').click(function() {
-  goToHomepage();
-})
-
-function goToCreateLooks() {
-  $('.create-look').show();
+  $('.homepage-buttons').show();
+  $('.create-look').hide();
   $('.user-looks-area').hide();
   $('.public-looks-area').hide();
-  $('.homepage-buttons').hide();
-}
+})
 
 function goToUserLooks() {
   $('.user-looks-area').show();
   $('.create-look').hide();
   $('.public-looks-area').hide();
   $('.homepage-buttons').hide();
-}
-
-function goToPublicLooks() {
-  $('.public-looks-area').show();
-  $('.create-look').hide();
-  $('.user-looks-area').hide();
-  $('.homepage-buttons').hide();
-}
-
-function goToHomepage() {
-  $('.homepage-buttons').show();
-  $('.create-look').hide();
-  $('.user-looks-area').hide();
-  $('.public-looks-area').hide();
 }
 
 //  ********* DISPLAY LOOKS THUMBNAILS  ************
@@ -66,7 +54,7 @@ function loadLibrary() {
     url: "/api/makeuplooks",
     method: "GET",
     success: function(data) {
-      console.log("get makeup looks", data);
+      console.log("got makeup looks", data);
       displayAllUsersMakeupLooks(data);
       displayOneUsersMakeupLooks(data);
     },
@@ -101,17 +89,8 @@ function displayOneUsersMakeupLooks(data) {
   $('.user-looks').html(returnHTML);
 };
 
-// function makeThumbnail(item) {
-//  return `<div class="thumbnail col-4" data-ref="${item.id}">
-//     <div class="thumbnail-content"> 
-//       <img src="${item.image}" class="thumbnail-img thumbnail-${item.id}"> 
-//       <div class="title-${item.id}">${item.title}</div>
-//     </div>
-//   </div>`;
-// };
-
 function makeThumbnail(item) {
-  return `<div class="thumbnail col-4" data-ref="${item.id}">
+  return `<div class="thumbnail col-4" data-ref="${item.id}" tabindex="0">
      <div class="thumbnail-content"> 
        <div style= "background-image: url(${item.image});" class="thumbnail-img thumbnail-${item.id}"> </div>
        <div class="title-${item.id}"=>${item.title}</div>
@@ -133,10 +112,8 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=step_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      stepsArray.push(inputFieldValue);
+      // prevent commas from creating new i
+      stepsArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -144,10 +121,7 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=product_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      productsArray.push(inputFieldValue);
+      productsArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -155,10 +129,7 @@ $('#create-look-form').submit(function(e) {
     let inputField = $(`input[name=colortheme_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      colorthemesArray.push(inputFieldValue);
+      colorthemesArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -166,7 +137,6 @@ $('#create-look-form').submit(function(e) {
   if($('#select-skintype').val() === "Select skintype") {
     skinType = "N/A";
   }
-
 
   // Remove falsy values from arrays
   stepsArray = stepsArray.filter(Boolean);
@@ -255,6 +225,15 @@ $('body').on('click', '.thumbnail', function(e) {
   openModal(activeLook);
 });
 
+// Open modal listener on keypress
+$('body').on('keypress', '.thumbnail', function(e) {
+  if(e.which === 13) {
+    let clickedThumbnailId = $(this).attr("data-ref");
+    activeLook = looks[clickedThumbnailId];
+    openModal(activeLook);
+  }
+});
+
 // Close modal listener
 $('.modal').on('click', '.close', function(e) {
   $('.modal').hide();
@@ -272,7 +251,6 @@ function openModal(look) {
 };
 
 function formatLook(look) {
-  console.log("look", look);
   let editDelete = (look.username === sessionStorage.getItem('username'))?`<div class="edit-delete-buttons"><button class="edit-btn" data-ref="${look.id}">Edit</button>
   <button class="delete-btn" data-ref="${look.id}">Delete</button></div>` : ``;
   let steps = "";
@@ -283,7 +261,6 @@ function formatLook(look) {
   look.steps.toString().split(",").forEach(step => {
     steps += `<li>${step}</li>`;
   }) ;
- 
   
   look.products.toString().split(",").forEach(product => {
     products += `<li>${product}</li>`;
@@ -324,7 +301,7 @@ function deleteLook(look, callback) {
   const settings = {
     method: "DELETE",
     success: function() {
-      console.log("Look deleted");
+      console.log("look deleted");
       // remove from local object
       looks[look] = undefined;
       // remove from page
@@ -351,15 +328,12 @@ $('body').on('submit', '#edit-look-form', function(e) {
   let products = $('#edit-look-form .product').length;
   let colorthemes = $('#edit-look-form .colortheme').length;
 
-  console.log("steps", steps);
+  
   for(let i = 1; i <= steps; i++) {
     let inputField = $(`#edit-look-form input[name=step_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      stepsArray.push(inputFieldValue);
+      stepsArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
   
@@ -367,10 +341,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
     let inputField = $(`#edit-look-form input[name=product_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      productsArray.push(inputFieldValue);
+      productsArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -378,10 +349,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
     let inputField = $(`#edit-look-form input[name=colortheme_${i}]`);
     // if it exists on the page
     if (inputField.length) {
-      // prevent commas from creating new inputs
-      let inputFieldValue = inputField.val();
-      inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
-      colorthemesArray.push(inputFieldValue);
+      colorthemesArray.push(replaceCommasWithHTMLEntities(inputField));
     }
   }
 
@@ -396,7 +364,6 @@ $('body').on('submit', '#edit-look-form', function(e) {
   colorthemesArray = colorthemesArray.filter(Boolean);
 
   // Compile key/value pairs to send form data
-  console.log("files", files);
   let data = new FormData(); 
   $.each(files, function(key, value) { data.append(key, value); });
   // first argument is the name
@@ -406,7 +373,6 @@ $('body').on('submit', '#edit-look-form', function(e) {
   data.append("products", productsArray);
   data.append("skintype", skinType);
   data.append("colortheme", colorthemesArray);
-  console.log("data", data);
   
   // API request
   $.ajax({
@@ -427,7 +393,7 @@ $('body').on('submit', '#edit-look-form', function(e) {
       looks[data.id] = data;
       // add it to the public library
       $('.public-looks').append(makeThumbnail(data));
-      // // add it to the user library
+      // add it to the user library
       $('.user-looks').append(makeThumbnail(data));
       // close modal
       $('.modal').hide();
@@ -444,7 +410,6 @@ $('body').on('submit', '#edit-look-form', function(e) {
 $('.create-look').on('click', '.delete-field', function(e) {
   $(this).parent().remove();
 });
-
 
 function displayEditForm(look) {
   let stepsArray = look.steps[0].split(",");
@@ -505,7 +470,7 @@ function displayEditForm(look) {
     });
   };
 
-  return `<form id="edit-look-form" enctype="multipart/form-data">
+  return `<form role="form" id="edit-look-form" enctype="multipart/form-data">
           <input type="file" id="edit-file-uploader" name="image" class="image-upload"/><br/>
           <label for="title">Title</label><br/>
           <input type="text" name="title" value="${look.title}" required/><br/>
@@ -548,7 +513,6 @@ $('.edit-info').on('click', '.add-step', function(e) {
     <div><input type="text" name="step_${steps}" class="step multiple-fields-option" />
     <button class="delete-field">&times;</button></div>
   `;
-  console.log("newHTML", newHTML);
   $('#edit-look-form .steps').append(newHTML);
 });
 
@@ -564,7 +528,6 @@ $('.edit-info').on('click', '.add-product', e => {
   $('#edit-look-form .products').append(newHTML);
 });
 
-
 // add another color theme field in edit form
 $('.edit-info').on('click', '.add-colortheme', e => {
   e.preventDefault();
@@ -576,7 +539,6 @@ $('.edit-info').on('click', '.add-colortheme', e => {
   `;
   $('#edit-look-form .colorthemes').append(newHTML);
 });
-
 
 // Delete field in the create look form
 $('.edit-info').on('click', '.delete-field', function(e) {
@@ -598,5 +560,13 @@ $( '.modal-content' ).on('click', '.edit-btn', function(e) {
   $('.edit-info').html(displayEditForm(activeLook));
 });
 
+// **** FORMS ****
+
+// prevent commas from creating new input fields by replacing commas with HTML entities
+function replaceCommasWithHTMLEntities(input) {
+  let inputFieldValue = input.val();
+  inputFieldValue = inputFieldValue.replace(/,/g, '&#44;');
+  return inputFieldValue;
+}
 
 });
