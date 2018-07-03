@@ -1,3 +1,10 @@
 language: node_js
 node_js: node
 services: mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: Oiyv+BjqUtT2EcfoEoZW2SYFsRx+wkygRNXgYMo4Y6sWOWVP0D3B6sP82yi4NbYikBsQ0LZPRA2VsQEL/dXnIie+qIUdBksrZG/oEOU0fOgH0DfCBkOsBORwzdykCE3ilta7Y6imDKF6RGv1dYh/YVFUx0VpKm3hXhAQR98YTIR1MadA9a5IHCIb4QSmXFWLa2lFNdaojuXnomChMEamEJv7R4YB9kvyeOvIsTSe8kepfl3pHhioD7YuoiO2EUTgw4sBGgrwRndz0BWu9zX0+XIFqQN82d8zCoNbEOh5xZogXvtnQ6ar0K3/s0YBZJHcy5JpKrMBYphTc7Zd8TOH0BOzPXwqBU5r0o0nDRe0qNgc/f0G1PSYbO7rwXmxZ5KBlBj9vS+dqmOT+60WOWoq+owmRpOvyGvtdTS2F5PBsqGYN62EREkveiWw6OKRPKkqth2L+1u6UqhuupnpRf9Rt9zDFGvMeirUrFghLzEtFFy78oR4LDWlxZ2+eBNQGfErxCfZmEkRCtTRgZF7yP4fS5ujKjZVHxKlTe0mxcVnv1NgQUwnxM5wRqAXf++xqgfp3S24Q7nBuy+7Qyj7NSTsZPDHBVsE8tR7i/VlKucVh43TKMSu6LH59zDQgAAX3EjiT7uy6JGcbOJwZbEQvisKhJzZV1otcy/jeknQXcR0Awk=
+  app: nameless-fortress-80718
+  on:
+    repo: FrancesFisk/node-capstone-makeup
