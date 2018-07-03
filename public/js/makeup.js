@@ -26,7 +26,6 @@ function authorizeProtectedPg() {
       },
       error: function(err) {
         console.log(err.responseText);
-        window.location = "index.html"
       }
   });
 };

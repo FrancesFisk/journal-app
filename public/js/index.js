@@ -35,11 +35,14 @@ function postUserRegistration(user, pw) {
         password: `${pw}`
     },
     success: function(data) {
-        console.log("PostUserRegistration", data)
-        window.location = 'makeup.html';
+        console.log("PostUserRegistration", data);
+        alert("Thank you for signing up :) Please log in.");
+        $('.popup-signup').hide();
+        $('.popup-login').show();
     },
     error: function(err) {
         console.log(err.responseText);
+        alert("Sorry, that username is already taken.")
     },
     dataType: "json"
   })
@@ -61,6 +64,7 @@ function postLogin(user, pw) {
     },
     error: function(err) {
         console.log(err.responseText);
+        alert("Sorry, you entered an invalid username or password. Please try again.");
     },
     dataType: "json"
   })
