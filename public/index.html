@@ -12,69 +12,72 @@
 </head>
 <body class="login-pg">
     <header role="banner">
-        <div class="logout-area">
-            <button type="button" class="logout-btn">Log out</button>
-        </div>
-        <div class="sub-header">
-            <img src="/images/makeitup-logo.png" alt="make it up logo" class="logo"/>
-            <h3 class="app-description">Create, share and browse makeup looks</h3>
-        </div>
+      <div class="logout-area">
+        <button type="button" class="logout-btn">Log out</button>
+      </div>
+      <div class="sub-header">
+        <img src="/images/makeitup-logo.png" alt="make it up logo" class="logo"/>
+        <h3 class="app-description">Create, share and browse makeup looks</h3>
+      </div>
     </header>
     <section role="region" class="about">
-        <p>MAKEitUP is a place for makeup artists and enthusiasts to inspire and be inspired by creating, sharing and browsing makeup looks.</p>
-        <ul>
-            <li>What is a makeup look? It consists of a picture, title, steps, products, skin type and color themes.</li>
-            <li>Create: enter your own makeup looks to help you remember how to recreate it and to share it with others.</li>
-            <li>Browse: Check out the creative looks made by others in the MAKEitUP community.</li>
-        </ul>
-        <p><span>Sign up or Log In to get started!</span></p>
-        <div class="sign-in-area">
-                <div class="registration-buttons">
-                    <button type="button" class="signup-popup-btn">Sign Up</button>
-                    <button type="button" class="login-popup-btn">Log In</button>
-                </div>
-                <div class="popup popup-signup">
-                    <div class="popup-content content-signup">
-                        <span class="close">&times;</span>
-                        <form role="form" method="post" class="signup-form">
-                            <fieldset>
-                                <legend>SIGN UP</legend>
-                                <label for="username">Username</label>
-                                <input type="text" class="new-username" required><br/>
-                                <label for="user-password">Password</label>
-                                <input type="password" class="new-password" required><br/>
-                                <button type="submit" class="signup-btn">Sign up</button>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-                <div class="popup popup-login">
-                        <div class="popup-content content-login">
-                            <span class="close">&times;</span>
-                            <form role="form" action="/login" method="post" class="login-form">
-                                <fieldset>
-                                    <legend>LOG IN</legend>
-                                    <label for="username">Username</label>
-                                    <input type="text" class="existing-username" required><br/>
-                                    <label for="user-password">Password</label>
-                                    <input type="password" class="existing-password" required><br/>
-                                    <button type="submit" class="login-btn">Log In</button>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
+      <p>MAKEitUP is a place for makeup artists and enthusiasts to inspire and be inspired by creating, sharing and browsing makeup looks.</p>
+      <ul>
+        <li>What is a makeup look? It consists of a picture, title, steps, products, skin type and color themes.</li>
+        <li>Create: enter your own makeup looks to help you remember how to recreate it and to share it with others.</li>
+        <li>Browse: Check out the creative looks made by others in the MAKEitUP community.</li>
+      </ul>
+      <p><span>Sign up or Log In to get started!</span></p>
+      <p class="demo-info">To demo the app, use the following login:
+        <br/>username: demo123
+        <br/>password: password123</p>
+      <div class="sign-in-area">
+        <div class="registration-buttons">
+          <button type="button" class="signup-popup-btn">Sign Up</button>
+          <button type="button" class="login-popup-btn">Log In</button>
+        </div>
+        <div class="popup popup-signup">
+          <div class="popup-content content-signup">
+            <span class="close">&times;</span>
+            <form role="form" method="post" class="signup-form">
+              <fieldset>
+                <legend>SIGN UP</legend>
+                <label for="username">Username</label>
+                <input type="text" class="new-username" required><br/>
+                <label for="user-password">Password</label>
+                <input type="password" class="new-password" required><br/>
+                <button type="submit" class="signup-btn">Sign up</button>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+        <div class="popup popup-login">
+          <div class="popup-content content-login">
+            <span class="close">&times;</span>
+            <form role="form" action="/login" method="post" class="login-form">
+              <fieldset>
+                <legend>LOG IN</legend>
+                <label for="username">Username</label>
+                <input type="text" class="existing-username" required><br/>
+                <label for="user-password">Password</label>
+                <input type="password" class="existing-password" required><br/>
+                <button type="submit" class="login-btn">Log In</button>
+              </fieldset>
+            </form>
+          </div>
             </div>
+          </div>
         </section>
     <section role="region" class="public-looks">
     </section>
     <div class="modal">
-        <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="look-info">
-        </div>
-        <div class="edit-info hide">
-        </div>
-        </div>
+      <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="look-info">
+      </div>
+      <div class="edit-info hide">
+      </div>
+      </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="/js/index.js"></script>
