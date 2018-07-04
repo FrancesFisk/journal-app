@@ -290,6 +290,7 @@ i {
 #create-look-form legend{
   text-align: center;
   font-size: 25px;
+  margin-bottom: 20px;
 }
 
 .steps, .products, .skintype, .colorthemes {
@@ -335,6 +336,8 @@ input {
 
 .delete-field {
   display: inline;
+  padding: 2px 4px;
+  margin: 0;
 }
 
 #select-skintype, #edit-select-skintype {
