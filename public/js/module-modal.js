@@ -8,11 +8,14 @@ let files,
     colorthemes = 1,
     isHeroku = false;
 
-if (window.location.href.includes('nameless-fortress-80718')) {
-  isHeroku = true;
-  $('.image-file').addClass('hide');
-  $('.imgur-instructions').removeClass('hide');
+function checkForHeroku() {
+  if (window.location.href.includes('nameless-fortress-80718')) {
+    isHeroku = true;
+    $('.image-file').addClass('hide');
+    $('.imgur-instructions').removeClass('hide');
+  };
 };
+checkForHeroku();
 
 // Handle image files
 $('body').on('change', '#edit-file-uploader', prepareUpload); 
@@ -572,6 +575,7 @@ $( '.modal-content' ).on('click', '.edit-btn', function(e) {
   $('.look-info').addClass('hide');
   $('.edit-info').removeClass('hide');
   $('.edit-info').html(displayEditForm(activeLook));
+  checkForHeroku();
 });
 
 // **** FORMS ****
