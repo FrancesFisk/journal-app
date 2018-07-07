@@ -5,7 +5,14 @@ let files,
     activeLook,
     steps = 1,
     products = 1,
-    colorthemes = 1;
+    colorthemes = 1,
+    isHeroku = false;
+
+if (window.location.href.includes('nameless-fortress-80718')) {
+  isHeroku = true;
+  $('.image-file').addClass('hide');
+  $('.imgur-instructions').removeClass('hide');
+};
 
 // Handle image files
 $('body').on('change', '#edit-file-uploader', prepareUpload); 
@@ -145,7 +152,9 @@ $('#create-look-form').submit(function(e) {
 
   // Compile key/value pairs to send form data
   let data = new FormData(); 
-  $.each(files, function(key, value) { data.append(key, value); });
+  if(!isHeroku) {
+    $.each(files, function(key, value) { data.append(key, value); });
+  }
   // first argument is the name
   data.append("title", $('input[name=title]').val());
   data.append("steps", stepsArray);
@@ -471,7 +480,12 @@ function displayEditForm(look) {
   };
 
   return `<form role="form" id="edit-look-form" enctype="multipart/form-data">
-          <input type="file" id="edit-file-uploader" name="image" class="image-upload"/><br/>
+          <div class="image-file">
+            <input type="file" id="edit-file-uploader" name="image" class="image-upload"/>
+          </div>
+          <div class="imgur-instructions hide">
+            <h1> place imgur instructions here</h1>
+          </div>
           <label for="title">Title</label><br/>
           <input type="text" name="title" value="${look.title}" required/><br/>
           <input type="hidden" name="id" value="${look.id}"/>
