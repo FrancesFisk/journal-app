@@ -42,6 +42,7 @@ router.post('/create', jwtAuth, (req, res) => {
       let oldpath = files['0'].path; 
       let newpath = './public/images/' + files['0'].name;
       let imageUrl = `/images/${files['0'].name}`;
+
       fs.rename(oldpath, newpath, function(error) {
         // keep this?
         if(error) {
@@ -58,8 +59,16 @@ router.post('/create', jwtAuth, (req, res) => {
         colortheme: fields.colortheme
       };
     } else {
+      let imageUrl;
+
+      if(fields.image-url === undefined) {
+        imageUrl = '/images/makeitup-logo-square.png';
+      } else {
+        imageUrl = fields.image-url;
+      }
+
       object = {
-        image: '/images/makeitup-logo-square.png',
+        image: imageUrl,
         title: fields.title,
         username: req.user.username,
         steps: fields.steps,

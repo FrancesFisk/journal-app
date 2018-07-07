@@ -17,6 +17,8 @@ function checkForHeroku() {
 };
 checkForHeroku();
 
+// function to add heroku instructions and input field
+
 // Handle image files
 $('body').on('change', '#edit-file-uploader', prepareUpload); 
 $('body').on('change', '#create-look-uploader', prepareUpload);
@@ -164,6 +166,10 @@ $('#create-look-form').submit(function(e) {
   data.append("products", productsArray);
   data.append("skintype", skinType);
   data.append("colortheme", colorthemesArray);
+  
+  // if(isHeroku) {
+  //   data.append("image-url", input)
+  // }
   
   // API request
   $.ajax({
