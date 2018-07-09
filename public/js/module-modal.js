@@ -8,6 +8,7 @@ let files,
     colorthemes = 1,
     isHeroku = false;
 
+// Use text box if running on Heroku
 function checkForHeroku() {
   if (window.location.href.includes('nameless-fortress-80718')) {
     isHeroku = true;
@@ -16,8 +17,6 @@ function checkForHeroku() {
   };
 };
 checkForHeroku();
-
-// function to add heroku instructions and input field
 
 // Handle image files
 $('body').on('change', '#edit-file-uploader', prepareUpload); 
