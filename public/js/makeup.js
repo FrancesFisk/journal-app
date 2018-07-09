@@ -30,6 +30,19 @@ function authorizeProtectedPg() {
   });
 };
 
+//  ******* IMGUR INSTRUCTIONS ********
+$('.imgur-instructions button').click(function() {
+  toggleImgurInstructions();
+});
+
+function toggleImgurInstructions() {
+  if ($('.imgur-instructions ol').hasClass('hide')) {
+    $('.imgur-instructions ol').removeClass('hide');
+  } else {
+    $('.imgur-instructions ol').addClass('hide');
+  }
+}
+
 
 //  ******* NAV MENU ********
 $('.toggle-nav').click(function() {
