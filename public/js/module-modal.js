@@ -498,7 +498,7 @@ function displayEditForm(look) {
           <div class="image-file">
             <input type="file" id="edit-file-uploader" name="image" class="image-upload"/>
           </div>
-          <div class="imgur-instructions">
+          <div class="imgur-instructions hide">
             <label for="image-link">Image Link</label><br/>
             <input type="text" name="imageLink"/>
           </div>
