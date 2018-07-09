@@ -129,6 +129,35 @@ header .logout-area button {
   text-align: center;
 }
 
+.imgur-instructions button {
+  margin: 0;
+    padding: 0;
+    background: none;
+    color: black;
+    border: none;
+    font-weight: bold;
+}
+
+.imgur-instructions p {
+  margin-top: 0;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.imgur-instructions ol {
+  line-height: 24px;
+  background: #ffe9ec;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 16px;
+}
+
+.required {
+  font-size: 12px;
+  color: #b2497d;
+  text-transform: lowercase;
+}
+
 .demo-info {
   font-weight: bold;
     width: 60%;
@@ -293,7 +322,7 @@ i {
   margin-bottom: 20px;
 }
 
-.steps, .products, .skintype, .colorthemes {
+.title, .steps, .products, .skintype, .colorthemes {
   padding-top: 25px;
 }
 
@@ -311,7 +340,7 @@ i {
 }
 
 form {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 input {
