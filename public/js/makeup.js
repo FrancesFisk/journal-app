@@ -31,7 +31,7 @@ function authorizeProtectedPg() {
 };
 
 //  ******* IMGUR INSTRUCTIONS ********
-$('.imgur-instructions button').click(function() {
+$('.imgur-btn').click(function() {
   toggleImgurInstructions();
 });
 
