@@ -34,8 +34,8 @@ router.post('/create', jwtAuth, (req, res) => {
   let form = new formidable.IncomingForm();
 
   form.parse(req, function(err, fields, files) {
-    console.log(fields, files);
     console.log("files", files);
+    console.log("fields", fields);
     let object;
     if (Object.keys(files).length > 0) {
       console.log("if files > 0");
@@ -61,10 +61,10 @@ router.post('/create', jwtAuth, (req, res) => {
     } else {
       let imageUrl;
 
-      if(fields.image-url === undefined) {
+      if(!fields.imageLink) {
         imageUrl = '/images/makeitup-logo-square.png';
       } else {
-        imageUrl = fields.image-url;
+        imageUrl = fields.imageLink;
       }
 
       object = {
@@ -131,13 +131,27 @@ router.put('/update', jwtAuth, (req, res) => {
         colortheme: fields.colortheme
       };  
     } else {
-      object = {
-        title: fields.title,
-        steps: fields.steps,
-        products: fields.products,
-        skintype: fields.skintype,
-        colortheme: fields.colortheme
-      };  
+        let imageUrl;
+
+        if(fields.imageLink) {
+          imageUrl = fields.imageLink;
+          object = {
+            image: imageUrl,
+            title: fields.title,
+            steps: fields.steps,
+            products: fields.products,
+            skintype: fields.skintype,
+            colortheme: fields.colortheme
+          };  
+        } else {
+           object = {
+            title: fields.title,
+            steps: fields.steps,
+            products: fields.products,
+            skintype: fields.skintype,
+            colortheme: fields.colortheme
+          };  
+      }
     }
     return MakeupLook  
       .findByIdAndUpdate(fields.id, object, {new: true})

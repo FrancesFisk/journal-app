@@ -167,10 +167,10 @@ $('#create-look-form').submit(function(e) {
   data.append("skintype", skinType);
   data.append("colortheme", colorthemesArray);
   
-  // if(isHeroku) {
-  //   data.append("image-url", input)
-  // }
-  
+  if(isHeroku) {
+    data.append("imageLink", $('input[name=imageLink]').val());
+  }
+
   // API request
   $.ajax({
     url: '/api/makeuplooks/create',
@@ -383,7 +383,9 @@ $('body').on('submit', '#edit-look-form', function(e) {
 
   // Compile key/value pairs to send form data
   let data = new FormData(); 
-  $.each(files, function(key, value) { data.append(key, value); });
+  if(!isHeroku) {
+    $.each(files, function(key, value) { data.append(key, value); });
+  }
   // first argument is the name
   data.append("title", $('#edit-look-form input[name=title]').val());
   data.append("id", $('#edit-look-form input[name=id]').val());
@@ -391,6 +393,10 @@ $('body').on('submit', '#edit-look-form', function(e) {
   data.append("products", productsArray);
   data.append("skintype", skinType);
   data.append("colortheme", colorthemesArray);
+
+  if(isHeroku) {
+    data.append("imageLink", $('#edit-look-form input[name=imageLink]').val());
+  }
   
   // API request
   $.ajax({
@@ -492,8 +498,9 @@ function displayEditForm(look) {
           <div class="image-file">
             <input type="file" id="edit-file-uploader" name="image" class="image-upload"/>
           </div>
-          <div class="imgur-instructions hide">
-            <h1> place imgur instructions here</h1>
+          <div class="imgur-instructions">
+            <label for="image-link">Image Link</label><br/>
+            <input type="text" name="imageLink"/>
           </div>
           <label for="title">Title</label><br/>
           <input type="text" name="title" value="${look.title}" required/><br/>
