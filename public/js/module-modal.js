@@ -65,7 +65,6 @@ function loadLibrary() {
     url: "/api/makeuplooks",
     method: "GET",
     success: function(data) {
-      console.log("got makeup looks", data);
       displayAllUsersMakeupLooks(data);
       displayOneUsersMakeupLooks(data);
     },
@@ -181,7 +180,6 @@ $('#create-look-form').submit(function(e) {
     contentType: false,
     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
     success: function(data) {
-      console.log("Makeup look created: ", data);
       file = {};
       // add to looks object
       looks[data.id] = data;
@@ -262,9 +260,6 @@ function openModal(look) {
   let string = formatLook(look);
   $('.look-info').html(string);
   $('.modal').show();
-  // for (let key in look){
-  //   console.log(`${key} ${look[key]}`)
-  // }
 };
 
 function formatLook(look) {
@@ -318,7 +313,6 @@ function deleteLook(look, callback) {
   const settings = {
     method: "DELETE",
     success: function() {
-      console.log("look deleted");
       // remove from local object
       looks[look] = undefined;
       // remove from page
@@ -408,7 +402,6 @@ $('body').on('submit', '#edit-look-form', function(e) {
     contentType: false,
     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`},
     success: function(data) {
-      console.log("Makeup look updated: ", data);
       files = {};
       // remove it from the public and user library
       $(`div[data-ref=${data.id}]`).remove();

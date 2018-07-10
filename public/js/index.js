@@ -35,7 +35,6 @@ function postUserRegistration(user, pw) {
         password: `${pw}`
     },
     success: function(data) {
-        console.log("PostUserRegistration", data);
         alert("Thank you for signing up :) Please log in.");
         $('.popup-signup').hide();
         $('.popup-login').show();
@@ -57,7 +56,6 @@ function postLogin(user, pw) {
         password: `${pw}`
     },
     success: function(data) {
-        console.log("postLogin", data)
         sessionStorage.setItem('authToken', data.authToken);
         sessionStorage.setItem('username', user);
         window.location = 'makeup.html';
@@ -109,7 +107,6 @@ function loadLibrary() {
     },
     error: function(err) {
       console.log(err.responseText);
-      // window.location = "index.html"
     }
   });
 };
@@ -131,7 +128,6 @@ function displayMakeupLooks(data) {
 
 // Logout 
 $('.logout-area').click(function(e) {
-  console.log("logging out");
   e.preventDefault();
   // Remove saved data from sessionStorage
   sessionStorage.clear();
