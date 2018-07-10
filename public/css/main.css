@@ -23,6 +23,7 @@ button {
   color: white;
   margin: 10px;
   padding: 5px 15px;
+  cursor: pointer;
 }
 
 /* ***** HEADER ***** */
@@ -344,6 +345,7 @@ i {
   background: lightgray;
   border: none;
   font-size: 10px;
+  cursor: pointer;
 }
 
 form {
