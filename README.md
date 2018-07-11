@@ -18,14 +18,14 @@ MAKEitUP is a full stack project that allows users to create, share and browse m
 * JavaScript
 * jQuery
 
-### Back End
+#### Back End
 * Node.js + Express.js
 * MongoDB
 
-### Security
+#### Security
 * Passport.js
 * JSON web tokens
 
-### Testing
+#### Testing
 * Mocha + Chai
 * Travis CI
