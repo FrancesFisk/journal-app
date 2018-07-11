@@ -1,4 +1,5 @@
 # MAKEitUP
+_See the app live: https://nameless-fortress-80718.herokuapp.com/_
 
 MAKEitUP is a full stack project that allows users to create, share and browse makeup looks. 
   * What is a makeup look? It consists of a picture, title, steps, products, skin type and color themes.
