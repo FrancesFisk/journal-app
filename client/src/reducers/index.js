@@ -1,17 +1,14 @@
-import {
-  FETCH_MAIN_SUCCESS
-} from './actions';
+import { TEST_REDUCER } from './actions';
 
 const initialState = {
-  main: []
+    test: false
 };
 
-export function selfCareReducer(state=initialState, action) {
-  if (action.type === FETCH_MAIN_SUCCESS) {
-      return Object.assign({}, state, {
-          main: [...state.main, action.main]
-      });
-  }
-  
-  return state;
+export function testReducer(state=initialState, action) {
+    if (action.type === TEST_REDUCER) {
+        return Object.assign({}, state, {
+            test: true
+        });
+    }
+    return state;
 }
