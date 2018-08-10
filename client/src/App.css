@@ -1,7 +1,11 @@
 .App {
   text-align: center;
 }
-
+.francesButton {
+  font-size: 36px;
+  padding:20px 30px;
+  border-radius: 10px;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
