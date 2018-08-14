@@ -1,0 +1,8 @@
+.signup-form {
+  display: block;
+  width: 400px;
+  border: 1px solid black;
+  margin: 10px auto;
+  text-align: center;
+  margin-top: 150px;
+}

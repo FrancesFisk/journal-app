@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import axios from 'axios';
 import './App.css';
+import RegisterForm from './components/register-form.js';
 
 class App extends Component {
 
@@ -26,7 +27,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
           <button className="francesButton" onClick={ e => this.buttonHandler(e) }>Click here, Frances!</button>
         </header>
-       
+       <RegisterForm/>
       </div>
     );
   }
